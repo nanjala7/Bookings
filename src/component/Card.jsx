@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import "./Card.css";
 
+
 export const Card = ({
   imgSrc,
   imgAlt,

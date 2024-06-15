@@ -1,3 +1,37 @@
+.Title {
+  padding-top:3%;
+
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.App {
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+  margin: 0 70px; /* Add some margin between the columns */
+  flex: 1;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
 .card-container {
     width: 25rem;
     border-radius: 1rem;
@@ -16,7 +50,7 @@
   }
   
   .card-title {
-    margin: 0.5rem 5%;
+    margin: 0.6rem 3%;
     font-size: 0.8em;
     text-align: left;
    
@@ -25,8 +59,10 @@
   .card-description {
     margin: 0.3rem 8%;
     font-size: 0.6em;
-    text-align: justify;
+    text-align:justify;
     padding-top: 0%;
+     font-weight:lighter;
+    
   }
   /*.card-logo {
     width:0.3cm;
@@ -39,10 +75,10 @@
     width: 50%;
     border-radius: 10px;
     padding: 0.8rem 1rem;
-    background-color: #f0de1e;
+    background-color: #fbd137;
     color: rgb(11, 10, 10);
     text-decoration: none;
-    margin: 0.5rem 0.5rem;
-    font-size: 0.7em;
-    text-emphasis: bold;;
+    margin: 0.9rem 0.5rem;
+    font-size: 0.6em;
+    
   }
