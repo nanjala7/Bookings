@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Calendar } from "@/components/ui/calendar"
+import "./booking.css";
 
 import {
     Dialog,
@@ -17,7 +18,26 @@ function bookappointment() {
   return (
     <Dialog>
     <DialogTrigger asChild>
-    <Button className="mt-3 rounded full"> Select date&time</Button>
+    <Button 
+  className="DT button" 
+  style={{
+    backgroundColor: "#4CAF50", // Green background
+    border: "none", // Remove border
+    color: "white", // White text
+    padding: "15px 32px", // Padding
+    textAlign: "center", // Centered text
+    textDecoration: "none", // No underline
+    display: "inline-block", // Inline-block display
+    fontSize: "16px", // Font size
+    margin: "4px 2px", // Margin
+    cursor: "pointer", // Pointer cursor on hover
+    borderRadius: "8px", // Rounded corners
+    width: "5cm"
+  }}
+>
+  Select date&time
+</Button>
+
       </DialogTrigger>
   <DialogContent>
     <DialogHeader>
