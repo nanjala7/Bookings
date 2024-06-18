@@ -1,11 +1,13 @@
 .header {
-  display: flex;
+  display:flex;
   flex-direction: column; /* Change to column */
   align-items: flex-start; /* Align items to the left */
-  padding: 20px; /* Adjust padding as needed */
+  padding: 10px; /* Adjust padding as needed */
   
  border-bottom: 1px solid #f6e5e5;
- background-color: #d1d2ccf7;
+ background-color: #282A31;
+ width: 40cm;
+ margin-left:-2.5cm;
   
 
 }
@@ -26,7 +28,7 @@
 .logo-label {
   font-weight: bold;
   font-size: 22px;
-  color: #000000;
+  color: white;
   margin-top: 0; /* Reset margin */
 }
 
@@ -40,12 +42,13 @@
 .location {
   max-width: 25px;
   margin-right: 10px; /* Adjust spacing between icon and label */
+ 
 }
 
 .location-label {
   font-weight: bold;
   font-size: 13px;
-  color: #000000;
+  color: white;
 }
 
 nav {
@@ -61,7 +64,7 @@ nav ul {
 
 nav ul a {
   text-decoration: none;
-  color: rgb(9, 122, 105);
+  color: #fbd137;
   margin-left: 28px; /* Adjust spacing between links */
   margin-top: -0.4cm;
 
@@ -82,10 +85,10 @@ nav ul a {
 .time-label {
   font-weight: bold;
   font-size: 13px;
-  color: #000000;
+  color: white;
 }
 .divider {
-  border-top: 1px solid black;
+  border-top: 1px solid white;
   margin: 10px 0; /* Adjust margin as needed */
   width: 66%;
 
@@ -96,6 +99,7 @@ nav ul a {
   flex-direction: row; /* Keep icon and label side by side */
   align-items: center;
   margin: 10px 0; /* Adjust spacing between sections */
+  
 }
 
 .instant {
@@ -106,7 +110,7 @@ nav ul a {
 .instant-label {
   font-weight: bold;
   font-size: 13px;
-  color: #000000;
+  color: white;
 }
 
 .now-container {
@@ -126,7 +130,7 @@ nav ul a {
 .now-label {
   font-weight: bold;
   font-size: 13px;
-  color: #000000;
+  color: white;
   margin-top: -2cm;
 }
 
@@ -147,13 +151,13 @@ nav ul a {
 .guest-label {
   font-weight:bold;
   font-size: 13px;
-  color: #000000;
+  color: white;
   margin-top: -3.2cm;
 }
 .guest1-label, .now1-label, .instant1-label{
   font-weight:lighter;
   font-size: 13px;
-  color: #000000;
+  color: white;
   margin-top: -0.1cm;
 }
 .image-container {
@@ -167,92 +171,113 @@ nav ul a {
 
 .image {
   width: 500px;
-  margin-right: 100px;/* Adjust spacing between icon and label */
+  /* Adjust spacing between icon and label */
   height: 400px;
-  margin-left: 26.5cm;
-  margin-top: -10cm;
+  margin-left: 28cm;
+  margin-top: -9.5cm;
+  border-radius: 1cm;
 }
-.services h1 {
-padding-top: 20px;
-padding-left: 20px;
+
+.select {
+  width: 25rem;
+    border-radius: 1rem;
+    box-shadow: 0px 15px 20px #999;
+    display: flex;
+    flex-direction: column;
+    margin: 0.2rem;
+    background-color: white;
+    height: 600px;
+    width: 1100px;
+    margin-top: 1cm;
+    margin-left: -2cm;
+}
+.select h1{
+margin-left: 11cm;
 font-size: 25px;
-  
-}
-.services ul {
-  list-style-type:none;
-  padding: 8px;
-  margin: 0;
-}
-.services ul li {
-  margin-bottom: 19px; /* Adjust as needed */
+font-family: Arial, Helvetica, sans-serif;
+margin-top: 0.5cm;
 }
 
-.services ul li a {
-  display: block; /* Make the links fill the entire width of the list item */
-  text-decoration: none;
-  color: #000000; /* Adjust link color as needed */
-  padding: 10px 35px; /* Add padding to improve clickability */
-}
-/*.listedservices h1{
-  margin-left: 8cm;
-  margin-top: -6cm;
-  font-size: 18px;
-}*/
-
-/* Styling for the container */
-.listedservices {
-  width: 50%;
-  margin: 0 auto;
-  padding: 20px;
-  
-  
-}
-
-.listedservices h1 {
-  text-align: center;
-  color: #333;
-  font-size: 20px;
-  margin-top: -6cm;
-  margin-left: -16cm;
-}
-
-/* Styling for the form elements */
-.listedservices form ul {
-  list-style-type: none;
-  padding: 5px;
-}
-
-.listedservices form ul li {
-  margin: 15px 0;
-  padding: 10px;
-  
-  display: flex;
-  align-items: center;
-}
-
-.listedservices form ul li label {
-  flex:none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left:1cm ;
-  
-}
-
-.listedservices form ul li input[type="radio"] {
-  margin-right: 10px;
-  transform: scale(2.5);
-  
-}
-
-.listedservices form ul li p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+.multiselect-container {
   margin-top: 1cm;
-  margin-left: -3cm;
+  
+  margin-left: 0.5cm;
+  font-size: 18px;
+ 
 }
+
+.basic-multi-select {
+  margin-top: 0.5cm;
+  width: 12cm;
+  margin-left: 0cm;
+  font-size: 17px;
+
+}
+.multiselect-container1 {
+  margin-top: -2.1cm;
+  width: 18cm;
+  margin-left: 14cm;
+  font-size: 18px;
+ 
+}
+
+.basic-multi-select1 {
+  margin-top: 0.3cm;
+  width: 12cm;
+  margin-left: 0.5cm;
+  font-size: 17px;
+
+}
+.multiselect-container2 {
+  margin-top: 1cm;
+  width: 18cm;
+  margin-left: 0.6cm;
+  font-size: 18px;
+ 
+}
+
+.basic-multi-select2 {
+  margin-top: 0.5cm;
+  width: 12cm;
+  margin-left: 0.2cm;
+  font-size: 17px;
+
+}
+.multiselect-container3 {
+  margin-top: -2.3cm;
+  width: 18cm;
+  margin-left: 14cm;
+  font-size: 18px;
+ 
+}
+
+.basic-multi-select3 {
+  margin-top: 0.5cm;
+  width: 12cm;
+  margin-left: 0.5cm;
+  font-size: 17px;
+
+}
+
+.multiselect-container4 {
+  margin-top: 1cm;
+  width: 18cm;
+  margin-left: 0.5cm;
+  font-size: 18px;
+ 
+}
+
+.basic-multi-select4 {
+  margin-top: 0.5cm;
+  width: 12cm;
+  margin-left: 0.5cm;
+  font-size: 17px;
+
+}
+.DT button{
+  width: 5cm;
+}
+
 
 
 

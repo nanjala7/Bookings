@@ -1,10 +1,12 @@
 // File: src/selecting/Selecting.jsx
-
+import { MultiSelect } from '@mantine/core';
 function Selecting() {
   return (
-    <div>
-      <h1>Selecting Page</h1>
-    </div>
+    <MultiSelect
+    label="Your favorite libraries"
+    placeholder="Pick value"
+    data={['React', 'Angular', 'Vue', 'Svelte']}
+  />
   );
 }
 

@@ -1,9 +1,52 @@
+
 import "./booking.css";
+
+import Select from 'react-select';
+import  BookAppointment from './bookappointment';
+
+
+
 
 function Booking() {
 
- 
-
+  
+  const options = [
+    {
+      label: 'Hair Cut',
+      options: [
+        { value: 0, label: 'Gentlemen cut - $45' },
+        { value: 1, label: 'Bespoke cut' },
+        { value: 2, label: 'Beard/Mustache' },
+        { value: 3, label: 'Line up' },
+      ],
+    },
+    {
+      label: 'Facial Treatment',
+      options: [
+        { value: 4, label: 'Facial treatment 1' },
+        { value: 5, label: 'Facial treatment 2' },
+        { value: 6, label: 'Facial treatment 3' },
+      ],
+    },
+    {
+      label: 'Colour',
+      options: [
+        { value: 7, label: 'Colour 1' },
+        { value: 8, label: 'Colour 2' },
+        { value: 9, label: 'Colour 3' },
+      ],
+    },
+    {
+      label: 'Treatment',
+      options: [
+        { value: 10, label: 'Treatment 1' },
+        { value: 11, label: 'Treatment 2' },
+        { value: 12, label: 'Treatment 3' },
+      ],
+    },
+  ];
+  
+  
   return (
     
     <div className="container">
@@ -73,7 +116,7 @@ function Booking() {
         
         
       </div>
-      <div className="image-container">
+     <div className="image-container">
         <img
           src="/mancave1.jpg"
           alt="guest Logo"
@@ -84,52 +127,88 @@ function Booking() {
       </div>
         </header>
 
-        <div class="services">
-  <h1>Services</h1>
-  
-    <ul>
-      <li><a href="/">Hair cut</a></li>
-      <li><a href="/about">Facial Treatment</a></li>
-      <li><a href="/services">Colour</a></li>
-      <li><a href="/contact">Treatment</a></li>
-    </ul>
-  
-</div>
+       
+<div className="select">
+  <h1>SERVICES</h1>
 
-<div className="listedservices">
-        <h1>Hair Cut</h1>
-        <form >
-          <ul>
-            <li>
-              <label>
-                <input type="radio" name="gentlemen" value="Gentlemen's Cut" />
-                Gentlemen's Cut <p>45 mins</p> 
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="service" value="Bespoke Cut" />
-                Bespoke Cut
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="service" value="Colour" />
-                Colour
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="radio" name="service" value="Treatment" />
-                Treatment
-              </label>
-            </li>
-          </ul>
-          
-        </form>
-      </div>
 
+<div className="multiselect-container">
+<h2> Hair Cut </h2>
+      <Select
+      
+        isMulti
+        name="Haircut"
+        options={options}
+        className="basic-multi-select"
+        classNamePrefix="select"
+        placeholder="Select Hair Cut"
+      />
+       </div>
+
+       <div className="multiselect-container1">
+<h2> Facial Treatment </h2>
+      <Select
+      
+        isMulti
+        name="Haircut"
+        options={options}
+        className="basic-multi-select1"
+        classNamePrefix="select"
+        placeholder="Select Hair Cut"
+      />
+       </div>
+
+       <div className="multiselect-container2">
+<h2> Colour </h2>
+      <Select
+      
+        isMulti
+        name="Haircut"
+        options={options}
+        className="basic-multi-select2"
+        classNamePrefix="select"
+        placeholder="Select Hair Cut"
+      />
+       </div>
+
+       <div className="multiselect-container3">
+<h2> Treatment </h2>
+      <Select
+      
+        isMulti
+        name="Haircut"
+        options={options}
+        className="basic-multi-select3"
+        classNamePrefix="select"
+        placeholder="Select Hair Cut"
+      />
+
+      
+       </div>
+       
+       <div className="multiselect-container4">
+<h2> Staff </h2>
+      <Select
+      
+        isMulti
+        name="Haircut"
+        options={options}
+        className="basic-multi-select4"
+        classNamePrefix="select"
+        placeholder="Select staff"
+      />
+
+
+
+       </div>
+    <BookAppointment/>
+       </div>
+       
         </div>
+
+        
+        
+        
    
   );
 }
