@@ -19,9 +19,9 @@ function bookappointment() {
     <Dialog>
     <DialogTrigger asChild>
     <Button 
-  className="DT button" 
+  // className="DT button" 
   style={{
-    backgroundColor: "#4CAF50", // Green background
+    backgroundColor: "#fbd137", // Green background
     border: "none", // Remove border
     color: "white", // White text
     padding: "15px 32px", // Padding
@@ -31,8 +31,10 @@ function bookappointment() {
     fontSize: "16px", // Font size
     margin: "4px 2px", // Margin
     cursor: "pointer", // Pointer cursor on hover
-    borderRadius: "8px", // Rounded corners
-    width: "5cm"
+    borderRadius: "10px", // Rounded corners
+    width: "5cm",
+    marginLeft: "1cm",
+    marginTop: "1cm",
   }}
 >
   Select date&time

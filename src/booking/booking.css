@@ -180,7 +180,7 @@ nav ul a {
 
 .select {
   width: 25rem;
-    border-radius: 1rem;
+    border-radius: 20px !important;
     box-shadow: 0px 15px 20px #999;
     display: flex;
     flex-direction: column;
@@ -224,7 +224,7 @@ margin-top: 0.5cm;
 .basic-multi-select1 {
   margin-top: 0.3cm;
   width: 12cm;
-  margin-left: 0.5cm;
+  margin-right: 2cm;
   font-size: 17px;
 
 }
@@ -239,8 +239,9 @@ margin-top: 0.5cm;
 .basic-multi-select2 {
   margin-top: 0.5cm;
   width: 12cm;
-  margin-left: 0.2cm;
+  margin-right: 2cm;
   font-size: 17px;
+  
 
 }
 .multiselect-container3 {
@@ -254,7 +255,7 @@ margin-top: 0.5cm;
 .basic-multi-select3 {
   margin-top: 0.5cm;
   width: 12cm;
-  margin-left: 0.5cm;
+  margin-right: 2cm;
   font-size: 17px;
 
 }
@@ -270,7 +271,7 @@ margin-top: 0.5cm;
 .basic-multi-select4 {
   margin-top: 0.5cm;
   width: 12cm;
-  margin-left: 0.5cm;
+  margin-right: 1cm;
   font-size: 17px;
 
 }
