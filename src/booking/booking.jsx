@@ -2,6 +2,8 @@ import "./booking.css";
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import BookAppointment from './bookappointment';
+import CustomerDetails from './customerdetails';
+
 import Cart from './cart';
 
 function Booking() {
@@ -138,7 +140,7 @@ const filterServicesByCategory = (category) => {
       </header>
 
       <div className="select">
-        <h1>SERVICES</h1>
+        <h1>Book Appointment</h1>
 
         <div className="multiselect-container">
           <h2> Hair Cut </h2>
@@ -195,21 +197,32 @@ const filterServicesByCategory = (category) => {
         <div className="multiselect-container4">
           <h2> Staff </h2>
           <Select
-    isMulti
+  
     name="Staff"
     options={staffOptions} // Use staffOptions here
-    className="basic-multi-select4"
+    className="basic-single"
     classNamePrefix="select"
     placeholder="Select staff"
+    theme={(theme) => ({
+      ...theme,
+      borderRadius: 0,
+      colors: {
+        ...theme.colors,
+        primary25: '#fbd137',
+        primary: 'black',
+      },
+    })}
     styles={customStyles}
           />
         </div>
         <div>
         <BookAppointment/>
         </div>
-        <div>
-<Cart style={{ width: '50px', height: '50px' }}/>
+        <div >
+<Cart className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3"/>
         </div>
+        
+
       </div>
     </div>
   );

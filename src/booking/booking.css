@@ -179,23 +179,31 @@ nav ul a {
 }
 
 .select {
-  width: 25rem;
-    border-radius: 20px !important;
+  width: 65rem;
+    border-radius: 1rem;
     box-shadow: 0px 15px 20px #999;
     display: flex;
     flex-direction: column;
     margin: 0.2rem;
     background-color: white;
     height: 600px;
-    width: 1100px;
+   
     margin-top: 1cm;
     margin-left: -2cm;
 }
 .select h1{
-margin-left: 11cm;
-font-size: 25px;
-font-family: Arial, Helvetica, sans-serif;
-margin-top: 0.5cm;
+  margin-left: 1cm;
+  font-size: 1.125rem;
+    line-height: 1.75rem;
+  font-family: var(--mantine-font-family);
+  margin-top: 0.5cm;
+  background-color: hsl(var(--muted)/0.5); /* Added background color */
+  padding: 1.5rem; /* Added padding for better appearance */
+  color:black; /* Optional: Change text color for better contrast */
+  border-radius: 0rem; /* Optional: Rounded corners */
+  box-sizing: border-box;
+  margin-top: 0cm;
+  margin-left: 0cm;
 }
 
 .multiselect-container {
@@ -211,20 +219,22 @@ margin-top: 0.5cm;
   width: 12cm;
   margin-left: 0cm;
   font-size: 17px;
+  
 
 }
 .multiselect-container1 {
-  margin-top: -2.1cm;
+  margin-top: -2.2cm;
   width: 18cm;
   margin-left: 14cm;
   font-size: 18px;
+  
  
 }
 
 .basic-multi-select1 {
   margin-top: 0.3cm;
   width: 12cm;
-  margin-right: 2cm;
+  margin-left: 0cm;
   font-size: 17px;
 
 }
@@ -237,15 +247,14 @@ margin-top: 0.5cm;
 }
 
 .basic-multi-select2 {
-  margin-top: 0.5cm;
+  margin-top: 0.2cm;
   width: 12cm;
-  margin-right: 2cm;
+  margin-left: 0cm;
   font-size: 17px;
-  
 
 }
 .multiselect-container3 {
-  margin-top: -2.3cm;
+  margin-top: -2cm;
   width: 18cm;
   margin-left: 14cm;
   font-size: 18px;
@@ -253,25 +262,25 @@ margin-top: 0.5cm;
 }
 
 .basic-multi-select3 {
-  margin-top: 0.5cm;
+  margin-top: 0.2cm;
   width: 12cm;
-  margin-right: 2cm;
+  margin-left: 0.5cm;
   font-size: 17px;
 
 }
 
 .multiselect-container4 {
-  margin-top: 1cm;
+  margin-top: 0.5cm;
   width: 18cm;
   margin-left: 0.5cm;
   font-size: 18px;
  
 }
 
-.basic-multi-select4 {
-  margin-top: 0.5cm;
+.basic-single {
+  margin-top: 0.2cm;
   width: 12cm;
-  margin-right: 1cm;
+  margin-left: 0cm;
   font-size: 17px;
 
 }
