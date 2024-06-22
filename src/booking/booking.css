@@ -211,6 +211,7 @@ nav ul a {
   
   margin-left: 0.5cm;
   font-size: 18px;
+  
  
 }
 
@@ -219,6 +220,7 @@ nav ul a {
   width: 12cm;
   margin-left: 0cm;
   font-size: 17px;
+  
   
 
 }
@@ -264,7 +266,7 @@ nav ul a {
 .basic-multi-select3 {
   margin-top: 0.2cm;
   width: 12cm;
-  margin-left: 0.5cm;
+  margin-left: 0.1cm;
   font-size: 17px;
 
 }
@@ -289,6 +291,17 @@ nav ul a {
   height:70%;
 }
 
+
+.greeting-container {
+  margin-top: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 
 

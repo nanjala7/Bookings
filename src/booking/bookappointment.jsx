@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar } from "@/components/ui/calendar";
 import "./booking.css";
-
+import useAppointment from '@/hooks/useAppointment'; 
 import {
     Dialog,
     DialogContent,
@@ -18,6 +18,16 @@ function BookAppointment() {
     const [date, setDate] = useState(new Date());
     const [timeSlot, setTimeSlot] = useState([]);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState();
+
+
+    const { updateAppointment } = useAppointment();
+
+    const handleSubmit = () => {
+        if (date && selectedTimeSlot) {
+            updateAppointment(date, selectedTimeSlot);
+            // Navigate to the Cart component or perform other actions as needed
+        }
+    };
 
     useEffect(() => {
         getTimeSlots();
@@ -74,7 +84,6 @@ function BookAppointment() {
                         backgroundColor: "#fbd137",
                         border: "none",
                         color: "black",
-                        padding: "10px 32px",
                         textAlign: "center",
                         textDecoration: "none",
                         display: "inline-block",
@@ -170,7 +179,7 @@ Select Time Slot
             </Button>
             </>
           </DialogClose>
-            <Button type="button" className="bg-yellow-400 text-black" disabled={!(date&&selectedTimeSlot)}> 
+            <Button type="button" className="bg-yellow-400 text-black" disabled={!(date&&selectedTimeSlot) } onClick={handleSubmit}> 
               Submit
             </Button>
            
