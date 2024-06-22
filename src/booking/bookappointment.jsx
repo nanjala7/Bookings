@@ -171,18 +171,11 @@ Select Time Slot
                 </DialogHeader>
               <DialogFooter className="sm:justify-end">
           <DialogClose asChild>
-            <>
-            <Button type="button" 
-            className="text-red-500 border-red-500"
-            variant="outline">
-              Close
-            </Button>
-            </>
-          </DialogClose>
-            <Button type="button" className="bg-yellow-400 text-black" disabled={!(date&&selectedTimeSlot) } onClick={handleSubmit}> 
+          <Button type="button" className="bg-yellow-400 text-black" disabled={!(date&&selectedTimeSlot) } onClick={handleSubmit}> 
               Submit
-            </Button>
-           
+            </Button>    
+          </DialogClose>
+
         </DialogFooter>
             </DialogContent>
         </Dialog>

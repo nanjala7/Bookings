@@ -5,6 +5,7 @@ import BookAppointment from './bookappointment';
 import CustomerDetails from './customerdetails';
 import Cart from './cart';
 import { Button } from "@/components/ui/button";
+import Grid from '@mui/material/Grid';
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -123,122 +124,138 @@ function Booking() {
         </h1>
         <p className="mt-4 text-lg text-gray-500 animate-fadeIn delay-150 duration-700">Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
       </div>
-      <div className="container flex flex-col md:flex-row justify-center items-center">
-        {!showCart ? (
-          <div className="w-full md:w-1/4 p-4 flex flex-col items-center">
-            <div className="select">
-             <h1 className="font-bold text-xl">BOOK APPOINTMENT</h1>
-              <div className="multiselect-container">
-                <h2> Hair Cut </h2>
-                <Select
-                  isMulti
-                  name="Haircut"
-                  options={filterServicesByCategory('Hair Cut')}
-                  className="basic-multi-select"
-                  classNamePrefix="select"
-                  placeholder="Select Hair Cut"
-                  styles={customStyles}
-                  onChange={handleHaircutChange}
-                  value={selectedHaircuts}
-                />
+      <div className="container">
+        <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
+          {!showCart ? (
+            <Grid item xs={12} md={3} p={2}>
+              <div className="select">
+                <h1 className="font-bold text-xl">BOOK APPOINTMENT</h1>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <div className="multiselect-container">
+                      <h2>Hair Cut</h2>
+                      <Select
+                        isMulti
+                        name="Haircut"
+                        options={filterServicesByCategory('Hair Cut')}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        placeholder="Select Hair Cut"
+                        styles={customStyles}
+                        onChange={handleHaircutChange}
+                        value={selectedHaircuts}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="multiselect-container1">
+                      <h2>Facial Treatment</h2>
+                      <Select
+                        isMulti
+                        name="FacialTreatment"
+                        options={filterServicesByCategory('Facial Treatment')}
+                        className="basic-multi-select1"
+                        classNamePrefix="select"
+                        placeholder="Select Facial Treatment"
+                        styles={customStyles}
+                        onChange={handleFacialTreatmentChange}
+                        value={selectedFacialTreatments}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="multiselect-container2">
+                      <h2>Color</h2>
+                      <Select
+                        isMulti
+                        name="Color"
+                        options={filterServicesByCategory('Color')}
+                        className="basic-multi-select2"
+                        classNamePrefix="select"
+                        placeholder="Select Color"
+                        styles={customStyles}
+                        onChange={handleColorChange}
+                        value={selectedColors}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="multiselect-container3">
+                      <h2>Treatment</h2>
+                      <Select
+                        isMulti
+                        name="Treatment"
+                        options={filterServicesByCategory('Treatment')}
+                        className="basic-multi-select3"
+                        classNamePrefix="select"
+                        placeholder="Select Treatment"
+                        styles={customStyles}
+                        onChange={handleTreatmentChange}
+                        value={selectedTreatments}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="multiselect-container4">
+                      <h2>Staff</h2>
+                      <Select
+                        name="Staff"
+                        options={staffOptions}
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Select staff"
+                        theme={(theme) => ({
+                          ...theme,
+                          borderRadius: 0,
+                          colors: {
+                            ...theme.colors,
+                            primary25: '#fbd137',
+                            primary: 'black',
+                          },
+                        })}
+                        styles={customStyles}
+                        onChange={handleStaffChange}
+                        value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <BookAppointment />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '100%',
+                      marginTop: '20px'
+                    }}>
+                      <Button onClick={toggleView} style={{
+                        marginTop: '40px',
+                        padding: "5px 16px",
+                        width: '200px'
+                      }}>Continue to Cart</Button>
+                      <div style={{ margin: '5px' }}>OR</div>
+                      <CustomerDetails buttonText={'Proceed to Book Now'} />
+                    </div>
+                  </Grid>
+                </Grid>
               </div>
-              <div className="multiselect-container1">
-                <h2> Facial Treatment </h2>
-                <Select
-                  isMulti
-                  name="FacialTreatment"
-                  options={filterServicesByCategory('Facial Treatment')}
-                  className="basic-multi-select1"
-                  classNamePrefix="select"
-                  placeholder="Select Facial Treatment"
-                  styles={customStyles}
-                  onChange={handleFacialTreatmentChange}
-                  value={selectedFacialTreatments} 
-                />
-              </div>
-              <div className="multiselect-container2">
-                <h2> Color </h2>
-                <Select
-                  isMulti
-                  name="Color"
-                  options={filterServicesByCategory('Color')}
-                  className="basic-multi-select2"
-                  classNamePrefix="select"
-                  placeholder="Select Color"
-                  styles={customStyles}
-                  onChange={handleColorChange}
-                  value={selectedColors} 
-                />
-              </div>
-              <div className="multiselect-container3">
-                <h2> Treatment </h2>
-                <Select
-                  isMulti
-                  name="Treatment"
-                  options={filterServicesByCategory('Treatment')}
-                  className="basic-multi-select3"
-                  classNamePrefix="select"
-                  placeholder="Select Treatment"
-                  styles={customStyles}
-                  onChange={handleTreatmentChange}
-                  value={selectedTreatments}
-                />
-              </div>
-              <div className="multiselect-container4">
-                <h2> Staff </h2>
-                <Select
-                  name="Staff"
-                  options={staffOptions}
-                  className="basic-single"
-                  classNamePrefix="select"
-                  placeholder="Select staff"
-                  theme={(theme) => ({
-                    ...theme,
-                    borderRadius: 0,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#fbd137',
-                      primary: 'black',
-                    },
-                  })}
-                  styles={customStyles}
-                  onChange={handleStaffChange}
-                  value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
-                />
-              </div>
-              <div style={{ marginTop: '-30px' }}>
-                <BookAppointment/>
-              </div>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '100%'
-              }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
-                  <Button onClick={toggleView} style={{ 
-                    marginTop: '40px', 
-                    padding: "5px 16px", 
-                    width: '200px'
-                  }}>Continue to Cart</Button>
-                  <div style={{ margin: '5px' }}>OR</div>
-                  <CustomerDetails buttonText={'Proceed to Book Now'}/>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="w-full md:w-full p-4 flex flex-col items-center">
-            <Cart 
-              toggleView={toggleView} 
-              selectedStaff={selectedStaff} 
-              selectedHaircuts={selectedHaircuts}
-              selectedFacialTreatments={selectedFacialTreatments}
-              selectedColors={selectedColors}
-              selectedTreatments={selectedTreatments}
-            />
-          </div>
-        )}
+            </Grid>
+          ) : (
+            <Grid item xs={12} md={12} p={2}>
+              <Cart
+                toggleView={toggleView}
+                selectedStaff={selectedStaff}
+                selectedHaircuts={selectedHaircuts}
+                selectedFacialTreatments={selectedFacialTreatments}
+                selectedColors={selectedColors}
+                selectedTreatments={selectedTreatments}
+              />
+            </Grid>
+          )}
+        </Grid>
       </div>
     </>
   );

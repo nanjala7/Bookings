@@ -59,9 +59,9 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
         </div>
         <Separator className="my-4" />
         <div> 
-          <p style={{ fontSize: '24px' }} >Selected Staff: {selectedStaff.first_name}</p>
-          <p style={{ fontSize: '20px' }}>Date: {date.toLocaleDateString()}</p>
-          <p style={{ fontSize: '20px' }}>Time Slot: {selectedTimeSlot}</p>
+        <p style={{ fontSize: '24px', marginBottom: '10px' }} className='mb-5px'>Selected Staff: {selectedStaff.first_name}</p>
+        <p style={{ fontSize: '20px', marginBottom: '10px' }}>Date: {date.toLocaleDateString()}</p>
+        <p style={{ fontSize: '20px', marginBottom: '10px' }}>Time Slot: {selectedTimeSlot}</p>
         </div>
         <Separator className="my-4" />
       <div>
