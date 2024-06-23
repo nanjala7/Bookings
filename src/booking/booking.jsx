@@ -124,7 +124,7 @@ return (
     <span className="text-[#fbd137] transition-all duration-500 ease-in-out transform hover:scale-110 font-poppins rounded-lg animate-fadeIn">Hello there!</span>
     <span className="text-gray-500"> {greeting}</span>
   </h1>
-  <p className="mt-3 text-xs sm:text-sm md:text-lg lg:text-xl text-gray-500 animate-fadeIn delay-150 duration-700">Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
+ <p className="mt-3 sm:text-sm md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-500 animate-fadeIn delay-150 duration-700" style={{ fontSize: '0.65rem' }}>Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
 </div>
     <div className="main-container">
       <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
