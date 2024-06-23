@@ -60,7 +60,24 @@
     justify-content: flex-end; /* Align items to the right */
     width: 100%; /* Ensure it takes full width */
   }
+  .flex-col.md\\:flex-row {
+    flex-direction: column;
+  }
+
+  .flex-1.grid.grid-cols-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .flex-flex-1.mb-4 {
+    margin-bottom: 2rem;
+  }
+
+  .grid.grid-cols-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }
+
 
 /* Additional Styles */
 .greeting-container {
@@ -73,6 +90,11 @@
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+
+
 
 /* Layout Adjustments for Larger Screens */
 @media (min-width: 1024px) {
@@ -194,4 +216,6 @@
 .button-container{
     transform: translate(180px, -75px); /* Move right by 10px and up by 10px */
 }
+
+
 }

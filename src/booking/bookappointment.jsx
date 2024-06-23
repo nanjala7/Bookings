@@ -11,14 +11,13 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CalendarDays,Clock } from 'lucide-react';
-import { DialogClose, DialogFooter } from '../components/ui/dialog';
+import { CalendarDays, Clock } from 'lucide-react';
+import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 
 function BookAppointment() {
     const [date, setDate] = useState(new Date());
     const [timeSlot, setTimeSlot] = useState([]);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState();
-
 
     const { updateAppointment } = useAppointment();
 
@@ -60,7 +59,7 @@ function BookAppointment() {
 
         // Late Hours: 4:00 PM to 9:45 PM
         for (let i = 4; i <= 8; i++) {
-          if (i === 9) continue;
+            if (i === 9) continue;
             timeList.push({ time: `${i}:00 PM` });
             timeList.push({ time: `${i}:15 PM` });
             timeList.push({ time: `${i}:30 PM` });
@@ -73,27 +72,26 @@ function BookAppointment() {
     const isPastDay = (day) => {
         return day < new Date();
     };
-    
 
     return (
         <Dialog>
-            <DialogTrigger >
-                    <Button
-                        className="DT button"
-                        style={{
-                            backgroundColor: "#fbd137",
-                            border: "2px solid grey", // Changed border color to grey
-                            color: "black",
-                            textAlign: "center",
-                            textDecoration: "none",
-                            display: "inline-block",
-                            fontSize: "18px",
-                            margin: "-60px 550px", // Adjusted margin for spacing
-                            cursor: "pointer",
-                            borderRadius: "8px",
-                            width: "180px", // Adjusted width for button
-                        }}
-                    >
+            <DialogTrigger>
+                <Button
+                    className="DT button"
+                    style={{
+                        backgroundColor: "#fbd137",
+                        border: "2px solid grey",
+                        color: "black",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        display: "inline-block",
+                        fontSize: "18px",
+                        cursor: "pointer",
+                        borderRadius: "8px",
+                        width: "180px",
+                        margin: "-60px 550px",
+                    }}
+                >
                     Select date & time
                 </Button>
             </DialogTrigger>
@@ -105,7 +103,7 @@ function BookAppointment() {
                     <DialogDescription>
                         <div className="flex flex-col md:flex-row gap-2">
                             {/* Calendar Section */}
-                            <div className=" flex-flex-1 mb-4">
+                            <div className="flex-flex-1 mb-4">
                                 <h2 className="flex items-center gap-2">
                                     <CalendarDays className="h-5 w-5" style={{ color: '#fbd137' }} />
                                     Select Date
@@ -121,19 +119,18 @@ function BookAppointment() {
 
                             {/* Time Slots Section */}
                             <div className="flex-1 grid grid-cols-1 gap-2">
-                            <h2 className='flex gap-3 item-center '>
-            <Clock className='h-5 w-5 '
-style={{ color: '#fbd137' }}/>
-Select Time Slot
-</h2>
+                                <h2 className='flex gap-3 item-center '>
+                                    <Clock className='h-5 w-5' style={{ color: '#fbd137' }} />
+                                    Select Time Slot
+                                </h2>
                                 {/* Early Hours Section */}
                                 <div className="border rounded-lg p-2">
                                     <h3 className="text-center mb-2">Early Hours</h3>
                                     <div className="grid grid-cols-4 gap-2">
-                                    {timeSlot?.filter((item) => {
+                                        {timeSlot?.filter((item) => {
                                             const hour = parseInt(item.time.split(':')[0], 10);
                                             const period = item.time.split(' ')[1];
-                                            return (period === 'AM' || (period === 'PM' && (hour === 12 || hour <= 3))) ;
+                                            return (period === 'AM' || (period === 'PM' && (hour === 12 || hour <= 3)));
                                         }).map((item, index) => (
                                             <h2
                                                 key={index}
@@ -153,7 +150,7 @@ Select Time Slot
                                         {timeSlot?.filter((item) => {
                                             const hour = parseInt(item.time.split(':')[0], 10);
                                             const period = item.time.split(' ')[1];
-                                            return (period === 'PM' && hour >= 4 && hour !== 12  );
+                                            return (period === 'PM' && hour >= 4 && hour !== 12);
                                         }).map((item, index) => (
                                             <h2
                                                 key={index}
@@ -169,14 +166,13 @@ Select Time Slot
                         </div>
                     </DialogDescription>
                 </DialogHeader>
-              <DialogFooter className="sm:justify-end">
-          <DialogClose asChild>
-          <Button type="button" className="bg-yellow-400 text-black" disabled={!(date&&selectedTimeSlot) } onClick={handleSubmit}> 
-              Submit
-            </Button>    
-          </DialogClose>
-
-        </DialogFooter>
+                <DialogFooter className="sm:justify-end">
+                    <DialogClose asChild>
+                        <Button type="button" className="bg-yellow-400 text-black" disabled={!(date && selectedTimeSlot)} onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
