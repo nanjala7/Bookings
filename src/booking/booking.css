@@ -27,7 +27,7 @@
 @media (max-width: 768px) {
   .main-container {
     padding: 20px; /* Increase padding to reduce the effective content size */
-    margin-left: -40px;
+    margin-left: -30px;
     margin-right: 20px; /* Move the container to the left */
   }
 
