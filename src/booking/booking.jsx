@@ -201,50 +201,57 @@ return (
                   </div>
                   </div>
                 </Grid>
-                <Grid item xs={12}>
-                  <h2 className="Staff">Staff</h2>
-                  <div className="multiselect-container4">
-                    <Select
-                      name="Staff"
-                      options={staffOptions}
-                      className="basic-single"
-                      classNamePrefix="select"
-                      placeholder="Select staff"
-                      theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 0,
-                        colors: {
-                          ...theme.colors,
-                          primary25: '#fbd137',
-                          primary: 'black',
-                        },
-                      })}
-                      styles={customStyles}
-                      onChange={handleStaffChange}
-                      value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
-                    />
-                  </div>
-                </Grid>
-                <div className="button-container">
-                <Grid item xs={12}>
-                  <BookAppointment />
-                </Grid>
-                </div>
+                                  <Grid item xs={12}>
+                    <h2 className="Staff">Staff</h2>
+                    <div className="multiselect-container4">
+                      <Select
+                        name="Staff"
+                        options={staffOptions}
+                        className="basic-single"
+                        classNamePrefix="select"
+                        placeholder="Select staff"
+                        theme={(theme) => ({
+                          ...theme,
+                          borderRadius: 0,
+                          colors: {
+                            ...theme.colors,
+                            primary25: '#fbd137',
+                            primary: 'black',
+                          },
+                        })}
+                        styles={customStyles}
+                        onChange={handleStaffChange}
+                        value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="button-container" style={{
+                      display: 'flex',
+                      justifyContent: 'center', // Center horizontally
+                      alignItems: 'left', // Center vertically
+                      marginTop: '30px' // Adjust spacing as needed
+                    }}>
+                      <BookAppointment />
+                    </div>
+                  </Grid>
                 <Grid item xs={12}>
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    height: '100%',
+                    height: '50%',
                     marginTop: '20px'
                   }}>
-                    <Button onClick={toggleView} style={{
-                      marginTop: '40px',
-                      padding: "5px 16px",
-                      width: '200px'
-                    }}>Continue to Cart</Button>
-                    <div style={{ margin: '5px' }}>OR</div>
+              <Button onClick={toggleView} style={{
+                marginTop: '8px',
+                padding: "5px 16px",
+                width: '200px',
+border: '2px solid #6c757d', // Example: grey border
+backgroundColor: '#e9ecef' // Example: lighter grey background// Example: light gray background
+              }}>Continue to Cart</Button>
+                    <div style={{ margin: '10px' }}>OR</div>
                     <CustomerDetails buttonText={'Proceed to Book Now'} />
                   </div>
                 </Grid>

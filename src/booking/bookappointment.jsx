@@ -78,22 +78,22 @@ function BookAppointment() {
     return (
         <Dialog>
             <DialogTrigger >
-                <Button
-                    className="DT button"
-                    style={{
-                        backgroundColor: "#fbd137",
-                        border: "none",
-                        color: "black",
-                        textAlign: "center",
-                        textDecoration: "none",
-                        display: "inline-block",
-                        fontSize: "16px",
-                        margin: "-60px 550px", // Adjusted margin for spacing
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                        width: "180px", // Adjusted width for button
-                    }}
-                >
+                    <Button
+                        className="DT button"
+                        style={{
+                            backgroundColor: "#fbd137",
+                            border: "2px solid grey", // Changed border color to grey
+                            color: "black",
+                            textAlign: "center",
+                            textDecoration: "none",
+                            display: "inline-block",
+                            fontSize: "18px",
+                            margin: "-60px 550px", // Adjusted margin for spacing
+                            cursor: "pointer",
+                            borderRadius: "8px",
+                            width: "180px", // Adjusted width for button
+                        }}
+                    >
                     Select date & time
                 </Button>
             </DialogTrigger>
