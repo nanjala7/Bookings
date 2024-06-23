@@ -1,365 +1,49 @@
-.header {
-  display:flex;
-  flex-direction: column; /* Change to column */
-  align-items: flex-start; /* Align items to the left */
-  padding: 10px; /* Adjust padding as needed */
-  
- border-bottom: 1px solid #f6e5e5;
- background-color: #282A31;
- width: 40cm;
- margin-left:-2.5cm;
-  
-
-}
-
-.logo-container {
-  display: flex;
-  flex-direction: row; /* Keep logo and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-.logo {
-  max-width: 100px;
-  margin-right: 10px; /* Adjust spacing between logo and label */
-  margin-top: 0; /* Reset margin */
-}
-
-.logo-label {
-  font-weight: bold;
-  font-size: 22px;
-  color: white;
-  margin-top: 0; /* Reset margin */
-}
-
-.location-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-.location {
-  max-width: 25px;
-  margin-right: 10px; /* Adjust spacing between icon and label */
- 
-}
-
-.location-label {
-  font-weight: bold;
-  font-size: 13px;
-  color: white;
-}
-
-nav {
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-direction: row; /* Keep navigation links in a row */
-}
-
-nav ul a {
-  text-decoration: none;
-  color: #fbd137;
-  margin-left: 28px; /* Adjust spacing between links */
-  margin-top: -0.4cm;
-
-}
-
-.time-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-.time {
-  max-width: 25px;
-  margin-right: 10px; /* Adjust spacing between icon and label */
-}
-
-.time-label {
-  font-weight: bold;
-  font-size: 13px;
-  color: white;
-}
-.divider {
-  border-top: 1px solid white;
-  margin: 10px 0; /* Adjust margin as needed */
-  width: 66%;
-
-}
-
-.instant-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-  
-}
-
-.instant {
-  max-width: 25px;
-  margin-right: 10px; /* Adjust spacing between icon and label */
-}
-
-.instant-label {
-  font-weight: bold;
-  font-size: 13px;
-  color: white;
-}
-
-.now-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-.now {
-  max-width: 25px;
-  margin-right: 10px; /* Adjust spacing between icon and label */
-  margin-left: 7cm;
-  margin-top: -2cm;
-}
-
-.now-label {
-  font-weight: bold;
-  font-size: 13px;
-  color: white;
-  margin-top: -2cm;
-}
-
-.guest-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0; /* Adjust spacing between sections */
-}
-
-.guest {
-  max-width: 25px;
-  margin-right: 10px;
-  margin-left: 13cm;
-  margin-top: -3.3cm; /* Adjust spacing between icon and label */
-}
-
-.guest-label {
-  font-weight:bold;
-  font-size: 13px;
-  color: white;
-  margin-top: -3.2cm;
-}
-.guest1-label, .now1-label, .instant1-label{
-  font-weight:lighter;
-  font-size: 13px;
-  color: white;
-  margin-top: -0.1cm;
-}
-.image-container {
-  display: flex;
-  flex-direction: row; /* Keep icon and label side by side */
-  align-items: center;
-  margin: 10px 0;
-
-   /* Adjust spacing between sections */
-}
-
-.image {
-  width: 500px;
-  /* Adjust spacing between icon and label */
-  height: 400px;
-  margin-left: 28cm;
-  margin-top: -9.5cm;
-  border-radius: 1cm;
-}
-
-.select {
-  width: 100%; /* Full width for flexibility */
-  max-width: 65rem; /* Keep the maximum width */
-  border-radius: 1rem;
-  box-shadow: 0px 15px 20px #999;
-  display: flex;
-  flex-direction: column;
-  margin: 0.2rem;
-  background-color: white;
-  height: auto; /* Adjust height based on content */
-  padding: 1rem; /* Add padding for better appearance */
-  margin-left: 0; /* Ensure no left margin for consistency */
-}
-.select h1{
-  margin-left: 1cm;
-  font-size: 1.125rem;
-    line-height: 1.75rem;
-  font-family: var(--mantine-font-family);
-  margin-top: 0.5cm;
-  background-color: hsl(var(--muted)/0.5); /* Added background color */
-  padding: 1.5rem; /* Added padding for better appearance */
-  color:black; /* Optional: Change text color for better contrast */
-  border-radius: 0rem; /* Optional: Rounded corners */
-  box-sizing: border-box;
-  margin-top: 0cm;
-  margin-left: 0cm;
-}
-
-.multiselect-container {
-  margin-top: 1cm;
-  
-  margin-left: 0.5cm;
-  font-size: 18px;
-  
- 
-}
-
-.basic-multi-select {
-  margin-top: 0.5cm;
-  width: 12cm;
-  margin-left: 0cm;
-  font-size: 17px;
-  
-  
-
-}
-.multiselect-container1 {
-  margin-top: -2.2cm;
-  width: 18cm;
-  margin-left: 14cm;
-  font-size: 18px;
-  
- 
-}
-
-.basic-multi-select1 {
-  margin-top: 0.3cm;
-  width: 12cm;
-  margin-left: 0cm;
-  font-size: 17px;
-
-}
-.multiselect-container2 {
-  margin-top: 1cm;
-  width: 18cm;
-  margin-left: 0.6cm;
-  font-size: 18px;
- 
-}
-
-.basic-multi-select2 {
-  margin-top: 0.2cm;
-  width: 12cm;
-  margin-left: 0cm;
-  font-size: 17px;
-
-}
-.multiselect-container3 {
-  margin-top: -2cm;
-  width: 18cm;
-  margin-left: 14cm;
-  font-size: 18px;
- 
-}
-
-.basic-multi-select3 {
-  margin-top: 0.2cm;
-  width: 12cm;
-  margin-left: 0.1cm;
-  font-size: 17px;
-
-}
-
-.multiselect-container4 {
-  margin-top: 0.5cm;
-  width: 18cm;
-  margin-left: 0.5cm;
-  font-size: 18px;
- 
-}
-
-.basic-single {
-  margin-top: 0.2cm;
-  width: 12cm;
-  margin-left: 0cm;
-  font-size: 17px;
-
-}
-.DT button{
-  width: 5cm;
-  height:70%;
-}
-
-
-.greeting-container {
-  margin-top: 30px;
-  text-align: center;
-  width: 100%;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 /* General Styles */
 .select {
-  width: 65rem; /* Original width for larger screens */
+  width: 65rem; /* Adjusted for larger screens */
   border-radius: 1rem;
   box-shadow: 0px 15px 20px #999;
   display: flex;
   flex-direction: column;
-  margin: 0.2rem;
+  margin: 0.2rem 0; /* Unified margin */
   background-color: white;
-  height: 600px; /* Original height for larger screens */
-  margin-top: 1cm;
-  margin-left: -2cm;
+  padding: 1rem; /* Padding for appearance */
+  height: auto; /* Height based on content */
 }
 
 .select h1 {
-  margin-left: 1cm;
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-family: var(--mantine-font-family);
-  margin-top: 0.5cm;
-  background-color: hsl(var(--muted)/0.5); /* Added background color */
-  padding: 1.5rem; /* Added padding for better appearance */
-  color: black; /* Optional: Change text color for better contrast */
-  border-radius: 0rem; /* Optional: Rounded corners */
-  box-sizing: border-box;
-  margin-top: 0cm;
-  margin-left: 0cm;
+  background-color: hsl(var(--muted)/0.5); /* Background color */
+  padding: 1.5rem; /* Padding for appearance */
+  color: black; /* Text color */
+  margin: 0; /* Reset margins */
 }
 
-.multiselect-container,
-.multiselect-container1,
-.multiselect-container2,
-.multiselect-container3,
-.multiselect-container4 {
-  width: 18cm; /* Original width for larger screens */
-  margin-left: 0.5cm;
-  font-size: 18px;
-}
 
-.basic-multi-select,
-.basic-multi-select1,
-.basic-multi-select2,
-.basic-multi-select3,
-.basic-single {
-  width: 12cm; /* Original width for larger screens */
-  margin-left: 0cm;
-  font-size: 17px;
-}
 
 /* Media Query for Mobile Devices */
 @media (max-width: 768px) {
-  .select {
-    width: 100%; /* Full width on mobile */
-    max-width: 25rem; /* Maximum width for better control */
-    margin-left: 0; /* Ensure no left margin for consistency */
-    padding: 1rem; /* Add padding for better appearance */
-    height: auto; /* Adjust height based on content */
+  .main-container {
+    padding: 20px; /* Increase padding to reduce the effective content size */
+    margin-left: -40px; /* Move the container to the left */
+  }
+
+  .select,
+  .multiselect-container,
+  .multiselect-container1,
+  .multiselect-container2,
+  .multiselect-container3,
+  .multiselect-container4,
+  .basic-multi-select,
+  .basic-multi-select1,
+  .basic-multi-select2,
+  .basic-multi-select3,
+  .basic-single {
+    width: 95%; /* Full width on mobile */
+    margin-left: 0; /* Reset left margin */
+    max-width: 25rem; /* Max width for better control */
   }
 
   .multiselect-container,
@@ -367,28 +51,11 @@ nav ul a {
   .multiselect-container2,
   .multiselect-container3,
   .multiselect-container4 {
-    width: 100%; /* Full width on mobile */
-    margin-left: 0;
-    margin-top: 1rem; /* Add spacing between sections */
-  }
-
-  .basic-multi-select,
-  .basic-multi-select1,
-  .basic-multi-select2,
-  .basic-multi-select3,
-  .basic-single {
-    width: 100%; /* Full width on mobile */
-    max-width: 20rem; /* Reduce size for better fit */
-    margin-left: 0;
+    margin-top: 1rem; /* Spacing between sections */
   }
 }
 
-.greeting-container {
-  margin-top: 30px;
-  text-align: center;
-  width: 100%;
-}
-/* Ensure the greeting container and other elements are responsive */
+/* Additional Styles */
 .greeting-container {
   margin-top: 30px;
   text-align: center;
@@ -398,4 +65,123 @@ nav ul a {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Layout Adjustments for Larger Screens */
+@media (min-width: 1024px) {
+  .select-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust based on preference */
+    gap: 0px; /* Space between items */
+  }
+  .select{
+    gap: 2px;
+  }
+
+
+  .haircut { /* Example margin */
+    text-align: left; 
+    margin-right: 10px;
+   margin-left: 5px;
+   margin-top: 5px;
+   margin-bottom: 10px;
+   font-size: 18px;
+  }       
+
+  .basic-multi-select
+  {
+    margin-right: 10px;
+    width: 40%;
+  
+  }
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+}
+
+.facial {
+    text-align: right; /* Align text to the right */
+    margin-bottom: 10px;
+    margin-top: -90px; /* Adjust as needed to move closer to the top */
+    position: relative;
+    left: -290px;
+    font-size: 18px;
+  }
+
+  .basic-multi-select1
+  {
+    margin-left: 100px;
+    width: 121%;
+  }
+  /* .multiselect-container {
+    margin-right: 40px;
+  } */
+
+  .multiselect-container1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+    margin-left: 30px; /* Left margin for alignment */
+  }
+
+ .color {
+  margin-bottom: 5px;
+  font-size: 18px;
+ }
+ 
+  .multiselect-container2 {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-right: 5px;
+    width: 40%;
+  }
+
+.content-container3 {
+  display: flex;
+  flex-direction: column;
+  margin-top: -90px;
+}
+.Treatment {
+  text-align: right;
+  position: relative;
+  left: -332px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  /* No changes needed here unless you want to adjust the appearance of the heading */
+}
+
+.multiselect-container3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Keeps items aligned to the right */
+  margin-left: 5px;
+  /* Removed the negative margin-top to ensure it doesn't overlap or move above other elements */
+}
+
+.basic-multi-select3 {
+  width: 41.5%;
+}
+ .Staff{
+
+  margin-bottom: 10px;
+ }
+  .multiselect-container4 {
+    width: 40%; /* Full width for single select */
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+
+  }
+
+  .basic-multi-select,
+  .basic-multi-select1,
+  .basic-multi-select2,
+  .basic-multi-select3,
+  .basic-single {
+    font-size: 18px;
+  }
 }

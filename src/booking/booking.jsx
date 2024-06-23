@@ -10,9 +10,9 @@ import Grid from '@mui/material/Grid';
 function getGreeting() {
   const hour = new Date().getHours();
   if (hour < 12) {
-    return "Good morning";
+    return "Good Morning";
   } else if (hour < 18) {
-    return "Good afternoon";
+    return "Good fternoon";
   } else if (hour < 22) {
     return "Good evening";
   } else {
@@ -115,41 +115,44 @@ function Booking() {
     setSelectedTreatments(selectedOptions);
   };
 
-  return (
-    <>
-      <div className="greeting-container">
-        <h1 className="mt-5 text-5xl font-bold text-center">
-          <span className="text-[#fbd137] transition-all duration-500 ease-in-out transform hover:scale-110 font-poppins rounded-lg animate-fadeIn">Hello there!</span>
-          <span className="text-gray-500"> {greeting}</span>
-        </h1>
-        <p className="mt-4 text-lg text-gray-500 animate-fadeIn delay-150 duration-700">Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
-      </div>
-      <div className="container">
-        <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
-          {!showCart ? (
-            <Grid item xs={12} md={3} p={2}>
-              <div className="select">
-                <h1 className="font-bold text-xl">BOOK APPOINTMENT</h1>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <div className="multiselect-container">
-                      <h2>Hair Cut</h2>
-                      <Select
-                        isMulti
-                        name="Haircut"
-                        options={filterServicesByCategory('Hair Cut')}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        placeholder="Select Hair Cut"
-                        styles={customStyles}
-                        onChange={handleHaircutChange}
-                        value={selectedHaircuts}
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
+// Adjust the JSX to have headings on top of their respective select boxes
+
+return (
+  <>
+<div className="greeting-container">
+  <h1 className="mt-4 text-xl sm:text-2xl md:text-5xl lg:text-6xl font-bold text-center">
+    <span className="text-[#fbd137] transition-all duration-500 ease-in-out transform hover:scale-110 font-poppins rounded-lg animate-fadeIn">Hello there!</span>
+    <span className="text-gray-500"> {greeting}</span>
+  </h1>
+  <p className="mt-3 text-xs sm:text-sm md:text-lg lg:text-xl text-gray-500 animate-fadeIn delay-150 duration-700">Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
+</div>
+    <div className="main-container">
+      <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
+        {!showCart ? (
+          <Grid item xs={12} md={3} p={2}>
+            <div className="select">
+              <h1 className="font-bold text-xl">BOOK APPOINTMENT</h1>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <h2 className="haircut">Hair Cut</h2>
+                  <div className="multiselect-container">
+                    <Select
+                      isMulti
+                      name="Haircut"
+                      options={filterServicesByCategory('Hair Cut')}
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                      placeholder="Select Hair Cut"
+                      styles={customStyles}
+                      onChange={handleHaircutChange}
+                      value={selectedHaircuts}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="content-container">
+                    <h2 className="facial">Facial Treatment</h2>
                     <div className="multiselect-container1">
-                      <h2>Facial Treatment</h2>
                       <Select
                         isMulti
                         name="FacialTreatment"
@@ -162,103 +165,108 @@ function Booking() {
                         value={selectedFacialTreatments}
                       />
                     </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div className="multiselect-container2">
-                      <h2>Color</h2>
-                      <Select
-                        isMulti
-                        name="Color"
-                        options={filterServicesByCategory('Color')}
-                        className="basic-multi-select2"
-                        classNamePrefix="select"
-                        placeholder="Select Color"
-                        styles={customStyles}
-                        onChange={handleColorChange}
-                        value={selectedColors}
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div className="multiselect-container3">
-                      <h2>Treatment</h2>
-                      <Select
-                        isMulti
-                        name="Treatment"
-                        options={filterServicesByCategory('Treatment')}
-                        className="basic-multi-select3"
-                        classNamePrefix="select"
-                        placeholder="Select Treatment"
-                        styles={customStyles}
-                        onChange={handleTreatmentChange}
-                        value={selectedTreatments}
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div className="multiselect-container4">
-                      <h2>Staff</h2>
-                      <Select
-                        name="Staff"
-                        options={staffOptions}
-                        className="basic-single"
-                        classNamePrefix="select"
-                        placeholder="Select staff"
-                        theme={(theme) => ({
-                          ...theme,
-                          borderRadius: 0,
-                          colors: {
-                            ...theme.colors,
-                            primary25: '#fbd137',
-                            primary: 'black',
-                          },
-                        })}
-                        styles={customStyles}
-                        onChange={handleStaffChange}
-                        value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <BookAppointment />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      height: '100%',
-                      marginTop: '20px'
-                    }}>
-                      <Button onClick={toggleView} style={{
-                        marginTop: '40px',
-                        padding: "5px 16px",
-                        width: '200px'
-                      }}>Continue to Cart</Button>
-                      <div style={{ margin: '5px' }}>OR</div>
-                      <CustomerDetails buttonText={'Proceed to Book Now'} />
-                    </div>
-                  </Grid>
+                  </div>
                 </Grid>
-              </div>
-            </Grid>
-          ) : (
-            <Grid item xs={12} md={12} p={2}>
-              <Cart
-                toggleView={toggleView}
-                selectedStaff={selectedStaff}
-                selectedHaircuts={selectedHaircuts}
-                selectedFacialTreatments={selectedFacialTreatments}
-                selectedColors={selectedColors}
-                selectedTreatments={selectedTreatments}
-              />
-            </Grid>
-          )}
-        </Grid>
-      </div>
-    </>
-  );
+                <Grid item xs={12}>
+                  <h2 className="color">Color</h2>
+                  <div className="multiselect-container2">
+                    <Select
+                      isMulti
+                      name="Color"
+                      options={filterServicesByCategory('Color')}
+                      className="basic-multi-select2"
+                      classNamePrefix="select"
+                      placeholder="Select Color"
+                      styles={customStyles}
+                      onChange={handleColorChange}
+                      value={selectedColors}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="content-container3">
+                  <h2 className="Treatment">Treatment</h2>
+                  <div className="multiselect-container3">
+                    <Select
+                      isMulti
+                      name="Treatment"
+                      options={filterServicesByCategory('Treatment')}
+                      className="basic-multi-select3"
+                      classNamePrefix="select"
+                      placeholder="Select Treatment"
+                      styles={customStyles}
+                      onChange={handleTreatmentChange}
+                      value={selectedTreatments}
+                    />
+                  </div>
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <h2 className="Staff">Staff</h2>
+                  <div className="multiselect-container4">
+                    <Select
+                      name="Staff"
+                      options={staffOptions}
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Select staff"
+                      theme={(theme) => ({
+                        ...theme,
+                        borderRadius: 0,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#fbd137',
+                          primary: 'black',
+                        },
+                      })}
+                      styles={customStyles}
+                      onChange={handleStaffChange}
+                      value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
+                    />
+                  </div>
+                </Grid>
+                <div className="button-container">
+                <Grid item xs={12}>
+                  <BookAppointment />
+                </Grid>
+                </div>
+                <Grid item xs={12}>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                    marginTop: '20px'
+                  }}>
+                    <Button onClick={toggleView} style={{
+                      marginTop: '40px',
+                      padding: "5px 16px",
+                      width: '200px'
+                    }}>Continue to Cart</Button>
+                    <div style={{ margin: '5px' }}>OR</div>
+                    <CustomerDetails buttonText={'Proceed to Book Now'} />
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+          </Grid>
+        ) : (
+          <Grid item xs={12} md={12} p={2}>
+            <Cart
+              toggleView={toggleView}
+              selectedStaff={selectedStaff}
+              selectedHaircuts={selectedHaircuts}
+              selectedFacialTreatments={selectedFacialTreatments}
+              selectedColors={selectedColors}
+              selectedTreatments={selectedTreatments}
+            />
+          </Grid>
+        )}
+      </Grid>
+    </div>
+  </>
+);
 }
 
 export default Booking;
