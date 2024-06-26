@@ -49,7 +49,7 @@ function Booking() {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const response = await fetch('https://pro-artist-rho.vercel.app/services/');
+      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/services/');
       const data = await response.json();
       const formattedOptions = data.map(service => ({
         value: service.id,
