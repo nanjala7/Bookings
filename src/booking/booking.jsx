@@ -49,7 +49,7 @@ function Booking() {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const response = await fetch('http://127.0.0.1:8000/services/');
+      const response = await fetch('https://pro-artist-rho.vercel.app/services/');
       const data = await response.json();
       const formattedOptions = data.map(service => ({
         value: service.id,
