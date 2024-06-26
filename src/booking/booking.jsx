@@ -63,7 +63,7 @@ function Booking() {
     };
 
     const fetchStaff = async () => {
-      const response = await fetch('http://127.0.0.1:8000/staff');
+      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com//staff');
       const data = await response.json();
       const formattedStaffOptions = data.map(staff => ({
         value: staff.id,
