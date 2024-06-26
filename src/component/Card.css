@@ -1,6 +1,5 @@
 .Title {
-  padding-top:3%;
-
+  padding-top: 3%;
   text-align: center;
   font-weight: bold;
   font-size: 1.5em;
@@ -12,7 +11,6 @@
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  
 }
 
 .col {
@@ -31,54 +29,100 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
 .card-container {
-    width: 25rem;
-    border-radius: 1rem;
-    box-shadow: 0px 10px 8px #999;
-    display: flex;
+  width: 25rem;
+  border-radius: 1rem;
+  box-shadow: 0px 10px 8px #999;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  background-color: white;
+  height: fit-content;
+}
+
+.card-img {
+  width: 25rem;
+  height: 18rem;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.card-title {
+  margin: 0.6rem 3%;
+  font-size: 0.8em;
+  text-align: left;
+}
+
+.card-description {
+  margin: 0.3rem 8%;
+  font-size: 0.6em;
+  text-align: justify;
+  padding-top: 0%;
+  font-weight: lighter;
+}
+
+.card-btn {
+  align-self: center;
+  text-align: center;
+  width: 50%;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  background-color: #fbd137;
+  color: rgb(11, 10, 10);
+  text-decoration: none;
+  margin: 0.9rem 0.5rem;
+  font-size: 0.6em;
+}
+
+@media (max-width: 768px) {
+  .App {
+    height: auto;
     flex-direction: column;
-    margin: 0.5rem;
-    background-color: white;
-    height: fit-content;
+    padding: 20px;
   }
-  
+
+  .col {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .card-container {
+    width: 90%;
+  }
+
   .card-img {
-    width:25rem;
-    height: 18rem;
-    border-radius: 1rem 1rem 0 0;
+    width: 100%;
+    height: auto;
   }
-  
+
   .card-title {
-    margin: 0.6rem 3%;
-    font-size: 0.8em;
-    text-align: left;
-   
+    font-size: 1em;
   }
-  
+
   .card-description {
-    margin: 0.3rem 8%;
-    font-size: 0.6em;
-    text-align:justify;
-    padding-top: 0%;
-     font-weight:lighter;
-    
+    font-size: 0.8em;
   }
-  /*.card-logo {
-    width:0.3cm;
-    height:0.3cm;
-   
-  }*/
+
   .card-btn {
-    align-self: center;
-    text-align: center;
-    width: 50%;
-    border-radius: 10px;
-    padding: 0.8rem 1rem;
-    background-color: #fbd137;
-    color: rgb(11, 10, 10);
-    text-decoration: none;
-    margin: 0.9rem 0.5rem;
-    font-size: 0.6em;
-    
+    width: 80%;
+    font-size: 0.8em;
   }
+}
+
+@media (max-width: 480px) {
+  .Title {
+    font-size: 1.2em;
+  }
+
+  .card-title {
+    font-size: 0.9em;
+  }
+
+  .card-description {
+    font-size: 0.7em;
+  }
+
+  .card-btn {
+    width: 80%;
+    font-size: 0.7em;
+  }
+}

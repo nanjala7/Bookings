@@ -219,3 +219,76 @@
 
 
 }
+/* booking.css */
+
+/* Style for the button */
+.DT.button {
+  background-color: #fbd137;
+  border: 2px solid grey;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 180px;
+  margin: -60px 550px;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .DT.button {
+    margin: -60px auto;
+    display: block;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .gap-2 {
+    gap: 1rem;
+  }
+
+  .rounded-md {
+    border-radius: 0.5rem;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr); /* Reduce columns on small screens */
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .p-2 {
+    padding: 0.5rem;
+  }
+
+  .p-3 {
+    padding: 0.75rem;
+  }
+
+  .gap-3 {
+    gap: 0.75rem;
+  }
+
+  .scrollable-dialog-content {
+    max-height: calc(80vh - 60px); /* Adjust as needed, subtract height of footer */
+    overflow-y: auto;
+    padding-right: 1rem; /* Prevent content from being hidden under the scrollbar */
+  }
+
+  /* Ensure the DialogFooter is always visible */
+  .dialog-footer-fixed {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 10;
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
+  }
+}

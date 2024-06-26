@@ -225,6 +225,7 @@ return (
                       />
                     </div>
                   </Grid>
+
                   <Grid item xs={12}>
                     <div className="button-container" style={{
                       display: 'flex',
@@ -232,8 +233,9 @@ return (
                       alignItems: 'left', // Center vertically
                       marginTop: '30px' // Adjust spacing as needed
                     }}>
-                      <BookAppointment />
+                     
                     </div>
+                    <BookAppointment />
                   </Grid>
                 <Grid item xs={12}>
                   <div style={{

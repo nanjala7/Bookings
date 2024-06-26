@@ -76,34 +76,19 @@ function BookAppointment() {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button
-                    className="DT button"
-                    style={{
-                        backgroundColor: "#fbd137",
-                        border: "2px solid grey",
-                        color: "black",
-                        textAlign: "center",
-                        textDecoration: "none",
-                        display: "inline-block",
-                        fontSize: "18px",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                        width: "180px",
-                        margin: "-60px 550px",
-                    }}
-                >
+                <Button className="DT button">
                     Select date & time
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="scrollable-dialog-content">
                 <DialogHeader>
-                    <DialogTitle style={{ textAlign: 'center' }}>
+                    <DialogTitle className="text-center">
                         Select date and time
                     </DialogTitle>
                     <DialogDescription>
                         <div className="flex flex-col md:flex-row gap-2">
                             {/* Calendar Section */}
-                            <div className="flex-flex-1 mb-4">
+                            <div className="flex-1 mb-4">
                                 <h2 className="flex items-center gap-2">
                                     <CalendarDays className="h-5 w-5" style={{ color: '#fbd137' }} />
                                     Select Date
@@ -119,14 +104,14 @@ function BookAppointment() {
 
                             {/* Time Slots Section */}
                             <div className="flex-1 grid grid-cols-1 gap-2">
-                                <h2 className='flex gap-3 item-center '>
-                                    <Clock className='h-5 w-5' style={{ color: '#fbd137' }} />
+                                <h2 className="flex gap-3 items-center">
+                                    <Clock className="h-5 w-5" style={{ color: '#fbd137' }} />
                                     Select Time Slot
                                 </h2>
                                 {/* Early Hours Section */}
                                 <div className="border rounded-lg p-2">
                                     <h3 className="text-center mb-2">Early Hours</h3>
-                                    <div className="grid grid-cols-4 gap-2">
+                                    <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 md:grid-cols-4">
                                         {timeSlot?.filter((item) => {
                                             const hour = parseInt(item.time.split(':')[0], 10);
                                             const period = item.time.split(' ')[1];
@@ -135,7 +120,7 @@ function BookAppointment() {
                                             <h2
                                                 key={index}
                                                 onClick={() => setSelectedTimeSlot(item.time)}
-                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot && `bg-yellow-400 text-white`}`}
+                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot ? 'bg-yellow-400 text-white' : ''}`}
                                             >
                                                 {item.time}
                                             </h2>
@@ -146,7 +131,7 @@ function BookAppointment() {
                                 {/* Late Hours Section */}
                                 <div className="border rounded-lg p-3">
                                     <h3 className="text-center mb-2">Late Hours</h3>
-                                    <div className="grid grid-cols-4 gap-2">
+                                    <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 md:grid-cols-4">
                                         {timeSlot?.filter((item) => {
                                             const hour = parseInt(item.time.split(':')[0], 10);
                                             const period = item.time.split(' ')[1];
@@ -155,7 +140,7 @@ function BookAppointment() {
                                             <h2
                                                 key={index}
                                                 onClick={() => setSelectedTimeSlot(item.time)}
-                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot && `bg-yellow-400 text-white`}`}
+                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot ? 'bg-yellow-400 text-white' : ''}`}
                                             >
                                                 {item.time}
                                             </h2>
