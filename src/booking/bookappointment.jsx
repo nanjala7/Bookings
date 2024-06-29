@@ -80,61 +80,85 @@ function BookAppointment() {
                     Select date & time
                 </Button>
             </DialogTrigger>
-<DialogContent className="scrollable-dialog-content max-w-full sm:max-w-md">
-    <DialogHeader>
-        <DialogTitle className="text-center text-sm sm:text-lg">
-            Select date and time
-        </DialogTitle>
-        <DialogDescription>
-            <div className="flex flex-col sm:flex-row gap-2">
-                {/* Calendar Section */}
-                <div className="flex-1 mb-4">
-                    <h2 className="flex items-center gap-2 text-sm sm:text-base">
-                        <CalendarDays className="h-5 w-5" style={{ color: '#fbd137' }} />
-                        Select Date
-                    </h2>
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        disabled={isPastDay}
-                        className="rounded-md border"
-                    />
-                </div>
-
-                {/* Time Slots Section */}
-                <div className="flex-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    <h2 className="flex gap-3 items-center col-span-2 sm:col-span-4 text-sm sm:text-base">
-                        <Clock className="h-5 w-5" style={{ color: '#fbd137' }} />
-                        Select Time Slot
-                    </h2>
-                    {/* Time Slots Display Adjusted for Responsiveness */}
-                    <div className="border rounded-lg p-2 col-span-2 sm:col-span-4">
-                        <h3 className="text-center mb-2 text-sm sm:text-base">Time Slots</h3>
-                        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                            {timeSlot.map((item, index) => (
-                                <h2
-                                    key={index}
-                                    onClick={() => setSelectedTimeSlot(item.time)}
-                                    className={`p-1 sm:p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full text-xs sm:text-sm ${item.time === selectedTimeSlot ? 'bg-yellow-400 text-white' : ''}`}
-                                >
-                                    {item.time}
+            <DialogContent className="scrollable-dialog-content">
+                <DialogHeader>
+                    <DialogTitle className="text-center">
+                        Select date and time
+                    </DialogTitle>
+                    <DialogDescription>
+                        <div className="flex flex-col md:flex-row gap-2">
+                            {/* Calendar Section */}
+                            <div className="flex-1 mb-4">
+                                <h2 className="flex items-center gap-2">
+                                    <CalendarDays className="h-5 w-5" style={{ color: '#fbd137' }} />
+                                    Select Date
                                 </h2>
-                            ))}
+                                <Calendar
+                                    mode="single"
+                                    selected={date}
+                                    onSelect={setDate}
+                                    disabled={isPastDay}
+                                    className="rounded-md border"
+                                />
+                            </div>
+
+                            {/* Time Slots Section */}
+                            <div className="flex-1 grid grid-cols-1 gap-2">
+                                <h2 className="flex gap-3 items-center">
+                                    <Clock className="h-5 w-5" style={{ color: '#fbd137' }} />
+                                    Select Time Slot
+                                </h2>
+                                {/* Early Hours Section */}
+                                <div className="border rounded-lg p-2">
+                                    <h3 className="text-center mb-2">Early Hours</h3>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                        {timeSlot?.filter((item) => {
+                                            const hour = parseInt(item.time.split(':')[0], 10);
+                                            const period = item.time.split(' ')[1];
+                                            return (period === 'AM' || (period === 'PM' && (hour === 12 || hour <= 3)));
+                                        }).map((item, index) => (
+                                            <h2
+                                                key={index}
+                                                onClick={() => setSelectedTimeSlot(item.time)}
+                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot ? 'bg-yellow-400 text-white' : ''}`}
+                                            >
+                                                {item.time}
+                                            </h2>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Late Hours Section */}
+                                <div className="border rounded-lg p-3">
+                                    <h3 className="text-center mb-2">Late Hours</h3>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                        {timeSlot?.filter((item) => {
+                                            const hour = parseInt(item.time.split(':')[0], 10);
+                                            const period = item.time.split(' ')[1];
+                                            return (period === 'PM' && hour >= 4 && hour !== 12);
+                                        }).map((item, index) => (
+                                            <h2
+                                                key={index}
+                                                onClick={() => setSelectedTimeSlot(item.time)}
+                                                className={`p-2 text-center cursor-pointer hover:bg-yellow-400 hover:text-white border rounded-full ${item.time === selectedTimeSlot ? 'bg-yellow-400 text-white' : ''}`}
+                                            >
+                                                {item.time}
+                                            </h2>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </DialogDescription>
-    </DialogHeader>
-    <DialogFooter className="justify-center sm:justify-end">
-        <DialogClose asChild>
-            <Button type="button" className="bg-yellow-400 text-black text-sm sm:text-base" disabled={!(date && selectedTimeSlot)} onClick={handleSubmit}>
-                Submit
-            </Button>
-        </DialogClose>
-    </DialogFooter>
-</DialogContent>
+                    </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="sm:justify-end">
+                    <DialogClose asChild>
+                        <Button type="button" className="bg-yellow-400 text-black" disabled={!(date && selectedTimeSlot)} onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
+            </DialogContent>
         </Dialog>
     );
 }
