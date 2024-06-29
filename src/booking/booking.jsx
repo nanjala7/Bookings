@@ -63,7 +63,7 @@ function Booking() {
     };
 
     const fetchStaff = async () => {
-      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com//staff');
+      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/staff');
       const data = await response.json();
       const formattedStaffOptions = data.map(staff => ({
         value: staff.id,
@@ -201,7 +201,7 @@ return (
                   </div>
                   </div>
                 </Grid>
-                                  <Grid item xs={12}>
+                   <Grid item xs={12}>
                     <h2 className="Staff">Staff</h2>
                     <div className="multiselect-container4">
                       <Select
@@ -228,6 +228,7 @@ return (
 
                   <Grid item xs={12}>
                     <div className="button-container" style={{
+                      width:'50%',
                       display: 'flex',
                       justifyContent: 'center', // Center horizontally
                       alignItems: 'left', // Center vertically
