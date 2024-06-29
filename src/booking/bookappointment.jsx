@@ -80,7 +80,7 @@ function BookAppointment() {
                     Select date & time
                 </Button>
             </DialogTrigger>
-            <DialogContent className="scrollable-dialog-content">
+            <DialogContent className="scrollable-dialog-content max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle className="text-center text-sm sm:text-base">
                         Select date and time
