@@ -215,11 +215,8 @@
   }
 .button-container{
     transform: translate(180px, -75px); /* Move right by 10px and up by 10px */
-}
 
 
-}
-/* booking.css */
 
 /* Style for the button */
 .DT.button {
@@ -235,6 +232,12 @@
   width: 180px;
   margin: -10px 400px;
 }
+
+}
+
+
+}
+/* booking.css */
 
 /* Media query for small screens */
 @media (max-width: 768px) {
