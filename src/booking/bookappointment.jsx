@@ -98,7 +98,7 @@ function BookAppointment() {
                                     selected={date}
                                     onSelect={setDate}
                                     disabled={isPastDay}
-                                    className="rounded-md border"
+                                    className="rounded-sm border"
                                 />
                             </div>
 

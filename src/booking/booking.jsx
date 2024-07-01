@@ -7,6 +7,7 @@ import Cart from './cart';
 import { Button } from "@/components/ui/button";
 import Grid from '@mui/material/Grid';
 
+
 function getGreeting() {
   const hour = new Date().getHours();
   if (hour < 12) {
@@ -236,8 +237,14 @@ return (
                     }}>
                      
                     </div>
-                    <BookAppointment />
+                  
+                    
                   </Grid>
+                  <Grid item xs={12}>
+                  <div><BookAppointment /></div>
+                  </Grid>
+                 
+                 
                 <Grid item xs={12}>
                   <div style={{
                     display: 'flex',

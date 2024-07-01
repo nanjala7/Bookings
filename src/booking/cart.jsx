@@ -126,6 +126,7 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
           <Button variant="ghost" onClick={toggleView}>
             <ChevronLeft className="mr-2 h-4 w-4" /> Go back
           </Button>
+         
           <CustomerDetails
             buttonText={'Proceed to Book Now'}
             selectedStaff={selectedStaff}
