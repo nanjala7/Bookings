@@ -32,6 +32,8 @@ function Booking() {
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState({});
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
 
   const customStyles = {
     control: (base) => ({
@@ -241,7 +243,11 @@ return (
                     
                   </Grid>
                   <Grid item xs={12}>
-                  <div><BookAppointment /></div>
+                  <div><BookAppointment 
+                                          selectedDate={selectedDate}
+                                          setSelectedDate={setSelectedDate}
+                                          selectedTimeSlot={selectedTimeSlot}
+                                          setSelectedTimeSlot={setSelectedTimeSlot}/></div>
                   </Grid>
                  
                  
@@ -262,7 +268,15 @@ border: '2px solid #6c757d', // Example: grey border
 backgroundColor: '#e9ecef' // Example: lighter grey background// Example: light gray background
               }}>Continue to Cart</Button>
                     <div style={{ margin: '10px' }}>OR</div>
-                    <CustomerDetails buttonText={'Proceed to Book Now'} />
+                    <CustomerDetails buttonText={'Proceed to Book Now'}
+                    selectedStaff={selectedStaff}
+                    selectedHaircuts={selectedHaircuts}
+                    selectedFacialTreatments={selectedFacialTreatments}
+                    selectedColors={selectedColors}
+                    selectedTreatments={selectedTreatments} 
+                    selectedDate={selectedDate}
+                    selectedTimeSlot={selectedTimeSlot}
+                    />
                   </div>
                 </Grid>
               </Grid>
@@ -277,6 +291,8 @@ backgroundColor: '#e9ecef' // Example: lighter grey background// Example: light 
               selectedFacialTreatments={selectedFacialTreatments}
               selectedColors={selectedColors}
               selectedTreatments={selectedTreatments}
+              selectedDate={selectedDate}
+              selectedTimeSlot={selectedTimeSlot}
             />
           </Grid>
         )}

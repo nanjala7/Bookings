@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar } from "@/components/ui/calendar";
 import "./booking.css";
-import useAppointment from '@/hooks/useAppointment'; 
 import {
     Dialog,
     DialogContent,
@@ -14,17 +13,12 @@ import { Button } from "@/components/ui/button";
 import { CalendarDays, Clock } from 'lucide-react';
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 
-function BookAppointment() {
-    const [date, setDate] = useState(new Date());
+function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setSelectedTimeSlot }) {
     const [timeSlot, setTimeSlot] = useState([]);
-    const [selectedTimeSlot, setSelectedTimeSlot] = useState();
-
-    const { updateAppointment } = useAppointment();
 
     const handleSubmit = () => {
-        if (date && selectedTimeSlot) {
-            updateAppointment(date, selectedTimeSlot);
-            // Navigate to the Cart component or perform other actions as needed
+        if (selectedDate && selectedTimeSlot) {
+            // Perform actions as needed
         }
     };
 
@@ -76,9 +70,7 @@ function BookAppointment() {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className="DT button" 
-      >               Select date & time
-                </Button>
+                <Button className="DT button">Select date & time</Button>
             </DialogTrigger>
             <DialogContent className="scrollable-dialog-content max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
@@ -95,8 +87,8 @@ function BookAppointment() {
                                 </h2>
                                 <Calendar
                                     mode="single"
-                                    selected={date}
-                                    onSelect={setDate}
+                                    selected={selectedDate}
+                                    onSelect={setSelectedDate}
                                     disabled={isPastDay}
                                     className="rounded-sm border"
                                 />
@@ -153,7 +145,7 @@ function BookAppointment() {
                 </DialogHeader>
                 <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>
-                        <Button type="button" className="bg-yellow-400 text-black text-xs sm:text-sm" disabled={!(date && selectedTimeSlot)} onClick={handleSubmit}>
+                        <Button type="button" className="bg-yellow-400 text-black text-xs sm:text-sm" disabled={!(selectedDate && selectedTimeSlot)} onClick={handleSubmit}>
                             Submit
                         </Button>
                     </DialogClose>
