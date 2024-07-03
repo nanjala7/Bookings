@@ -1,0 +1,37 @@
+/* src/Home.css */
+.home-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .col {
+    margin: 70px;
+    flex: 0 1 auto;
+  }
+  
+  .nearest-card {
+    animation: glow 1.5s infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px #000000;
+    }
+    to {
+      box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+    }
+  }
+  
+  /* Other existing styles */
+  

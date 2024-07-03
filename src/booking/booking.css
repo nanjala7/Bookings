@@ -219,7 +219,7 @@
 
 
 /* Style for the button */
-.DT.button {
+.DT button {
   background-color: #fbd137;
   border: 2px solid grey;
   color: black;
@@ -241,7 +241,7 @@
 
 /* Media query for small screens */
 @media (max-width: 768px) {
-  .DT.button {
+  .DT button {
     margin: -50px auto;
     display: block;
   }

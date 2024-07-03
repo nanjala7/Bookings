@@ -27,21 +27,45 @@ function customerform() {
       <div className="grid gap-4">
       <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="first-name">First name</Label>
+                  <Label htmlFor="first-name"
+                  style={{
+                    fontSize: '16px',
+                    marginRight: '8px',
+                    textAlign: 'left',
+                  }}
+                  >First name</Label>
                   <Input id="first-name" placeholder="Max" required />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="last-name">Last name</Label>
+                  <Label htmlFor="last-name"
+                  style={{
+                    fontSize: '16px',
+                    marginRight: '8px',
+                    textAlign: 'left',
+                  }}
+                  >Last name</Label>
                   <Input id="last-name" placeholder="Robinson" required />
                 </div>
               </div>
             
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email"
+              style={{
+                fontSize: '16px',
+                marginRight: '8px',
+                textAlign: 'left',
+              }}
+              >Email</Label>
               <Input id="email" type="email" placeholder="m@example.com" required />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="MobileNo.">Mobile Number</Label>
+              <Label htmlFor="MobileNo."
+              style={{
+                fontSize: '16px',
+                marginRight: '8px',
+                textAlign: 'left',
+              }}
+              >Mobile Number</Label>
               <Input id="MobileNo." type="tel" placeholder="+254 700000000" required />
             </div>
             <Button type="submit" className="w-full">

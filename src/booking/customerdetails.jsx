@@ -23,16 +23,31 @@ function CustomerDetails({
   selectedTimeSlot,
   total,
 }) {
+  const [contact, setContact] = useState('');
   const [isCustomerInDatabase, setIsCustomerInDatabase] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const handleCheckCustomer = () => {
-    // Logic to check if customer is in the database
-    // This should set isCustomerInDatabase to false if the customer is not found
-    // For demonstration, we'll assume the customer is not found
-    setIsCustomerInDatabase(false);
-    setErrorMessage('Customer not found. Please fill out the form below.');
+  const handleCheckCustomer = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/customers?contact=${contact}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      // Assuming your API returns a JSON response indicating customer existence
+      if (data.exists) {
+        setIsCustomerInDatabase(true); // Customer found
+        setErrorMessage('');
+      } else {
+        setIsCustomerInDatabase(false); // Customer not found
+        setErrorMessage('Customer not found. Please fill out the form below.');
+      }
+    } catch (error) {
+      console.error('Error checking customer:', error);
+      setIsCustomerInDatabase(false); // Customer not found (or error)
+      setErrorMessage('Error checking customer. Please try again later.');
+    }
   };
+  
 
   return (
     <Sheet>
@@ -47,12 +62,22 @@ function CustomerDetails({
           <SheetDescription>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="MobileNo.">Mobile Number</Label>
-                <Input id="MobileNo." type="tel" placeholder="+254 700000000" required />
+                <Label htmlFor="contact"
+                style={{
+                  fontSize: '16px',
+                  marginRight: '8px',
+                  textAlign: 'left',
+                }}
+                
+                >Email or Mobile Number</Label>
+                <Input
+                  id="contact"
+                  type="text"
+                  placeholder="Email or Mobile Number"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  required
+                />
               </div>
               {!isCustomerInDatabase ? (
                 <>

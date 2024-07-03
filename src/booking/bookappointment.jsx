@@ -76,8 +76,8 @@ function BookAppointment() {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button className="DT button">
-                    Select date & time
+                <Button className="DT button" 
+      >               Select date & time
                 </Button>
             </DialogTrigger>
             <DialogContent className="scrollable-dialog-content max-h-[80vh] overflow-y-auto">

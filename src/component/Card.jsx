@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import "./Card.css";
+import LocationFinder from "./locationfinder"
 
 
 export const Card = ({
@@ -23,6 +24,7 @@ export const Card = ({
           {buttonText}
         </Link>
       )}
+     
     </div>
   );
 };
