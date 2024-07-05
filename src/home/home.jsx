@@ -76,7 +76,7 @@ function Home() {
       <div className="cards-container">
         {sortedLocations.map((location, index) => (
           <div className="col" key={index}>
-            <div className={`card-container ${nearestLocation && nearestLocation.title === location.title ? 'nearest-card' : ''}`}>
+            <div className={`card ${nearestLocation && nearestLocation.title === location.title ? 'nearest-card' : ''}`}>
               <Card
                 imgSrc={location.imgSrc}
                 imgAlt={location.imgAlt}

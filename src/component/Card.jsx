@@ -13,7 +13,7 @@ export const Card = ({
   link,
 }) => {
   return (
-    <div className="card-container">
+    <div className="card">
       {imgSrc && imgAlt && (
         <img src={imgSrc} alt={imgAlt} className="card-img" />
       )}

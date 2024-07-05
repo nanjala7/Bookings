@@ -1,37 +1,131 @@
 /* src/Home.css */
 .home-container {
-    text-align: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-size: 25px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.col {
+  margin: 60px;
+  flex: 1 0 300px; /* Flex-grow, flex-shrink, flex-basis */
+  max-width: 300px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 25rem;
+  height: 18rem;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.card-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fbd137;
+  color: #060606;
+  text-align: center;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.card-btn:hover {
+  background-color: #fbd137;
+}
+
+.nearest-card {
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px #000000;
+  }
+  to {
+    box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
     padding: 20px;
   }
-  
-  .title {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  .cards-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
+
   .col {
-    margin: 70px;
-    flex: 0 1 auto;
+    margin: 10px 0;
+    max-width: 100%;
   }
-  
-  .nearest-card {
-    animation: glow 1.5s infinite alternate;
+
+  .card-title {
+    font-size: 1.2em;
   }
-  
-  @keyframes glow {
-    from {
-      box-shadow: 0 0 10px #000000;
-    }
-    to {
-      box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
-    }
+
+  .card-description {
+    font-size: 1em;
   }
-  
-  /* Other existing styles */
-  
+
+  .card-btn {
+    width: 60%;
+    font-size: 1em;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5em;
+  }
+
+  .card-title {
+    font-size: 1em;
+  }
+
+  .card-description {
+    font-size: 0.9em;
+  }
+
+  .card-btn {
+    width: 60%;
+    font-size: 0.9em;
+    padding: 10px 0;
+  }
+}
+
+/* Other existing styles */
