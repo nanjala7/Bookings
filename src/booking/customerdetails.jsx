@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,  useRef } from 'react';
 import CustomerForm from './customerform';
+import emailjs from '@emailjs/browser';
+
+
 import {
   Sheet,
   SheetContent,
@@ -229,7 +232,11 @@ function CustomerDetails({
                         title: "Booking sucessful!.",
                         description: "booking details sent to email",
                       })
-                      handleBookNow
+                      handleBookNow();
+                      setTimeout(() => {
+                        window.location.reload(); // Refresh the window after 2 seconds
+                      }, 1500);
+                    
                     }}
                  
            >

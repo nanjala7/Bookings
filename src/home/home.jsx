@@ -1,8 +1,7 @@
-// src/Home.js
+// src/Home.jsx
 import React, { useState, useEffect } from 'react';
 import { Card } from '../component/Card';
 import axios from 'axios';
-import { getDistanceFromLatLonInKm } from '../distance';
 import './Home.css';
 
 const locations = [
@@ -34,32 +33,66 @@ function Home() {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const userLoc = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
           setUserLocation(userLoc);
 
-          // Calculate distances and sort locations by distance
-          const distances = locations.map(location => {
-            return {
-              ...location,
-              distance: getDistanceFromLatLonInKm(
-                userLoc.latitude,
-                userLoc.longitude,
-                location.lat,
-                location.lon
-              )
-            };
+          // Fetch real-time travel data
+          const locationsWithRealTimeData = await Promise.all(locations.map(async location => {
+            try {
+              const distanceMatrixResponse = await axios.get('https://maps.googleapis.com/maps/api/distancematrix/json', {
+                params: {
+                  origins: `${userLoc.latitude},${userLoc.longitude}`,
+                  destinations: `${location.lat},${location.lon}`,
+                  key: 'AIzaSyCy5GovA803gr57jPSKSc-xbCehnhttMks',
+                  mode: 'driving'
+                }
+              });
+
+              const data = distanceMatrixResponse.data;
+              if (data.rows[0].elements[0].status === "OK") {
+                const distance = data.rows[0].elements[0].distance.text;
+                const travelTime = data.rows[0].elements[0].duration.text;
+                return {
+                  ...location,
+                  distance,
+                  travelTime,
+                  googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
+                };
+              } else {
+                return {
+                  ...location,
+                  distance: "N/A",
+                  travelTime: "N/A",
+                  googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
+                };
+              }
+            } catch (error) {
+              console.error("Error fetching data from Google Maps API:", error);
+              return {
+                ...location,
+                distance: "Error",
+                travelTime: "Error",
+                googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
+              };
+            }
+          }));
+
+          // Sort locations by distance
+          locationsWithRealTimeData.sort((a, b) => {
+            if (a.distance === "N/A" || a.distance === "Error") return 1;
+            if (b.distance === "N/A" || b.distance === "Error") return -1;
+            return parseFloat(a.distance) - parseFloat(b.distance);
           });
 
-          distances.sort((a, b) => a.distance - b.distance);
-          setSortedLocations(distances);
-          setNearestLocation(distances[0]);
+          setSortedLocations(locationsWithRealTimeData);
+          setNearestLocation(locationsWithRealTimeData[0]);
         },
         (error) => {
-          console.error(error.message);
+          console.error("Error getting user location:", error.message);
         }
       );
     } else {
@@ -84,6 +117,10 @@ function Home() {
                 description={location.description}
                 buttonText="Book Now"
                 link={location.link}
+                distance={location.distance}
+                travelTime={location.travelTime}
+              
+                googleMapsLink={location.googleMapsLink}
               />
             </div>
           </div>

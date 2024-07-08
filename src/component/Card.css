@@ -5,7 +5,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
-  height: 12cm;
+  height: 13cm;
   width: 10cm;
 }
 
@@ -49,6 +49,14 @@
 
 .card-btn:hover {
   background-color:#fbd137;
+}
+.card-distance, .card-time {
+  font-size: 0.9em;
+  color: #666;
+}
+.card-description a:hover {
+  text-decoration: underline;
+  color: #fbd137;
 }
 @media (max-width: 768px) {
   
