@@ -1,21 +1,12 @@
-import "./booking.css";
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import BookAppointment from './bookappointment';
 import CustomerDetails from './customerdetails';
 import Cart from './cart';
+import Staff from './staff';  // Import the Staff component
 import { Button } from "@/components/ui/button";
 import Grid from '@mui/material/Grid';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
+import ProgressMobileStepper from './progressMobileStepper';
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -33,7 +24,6 @@ function getGreeting() {
 function Booking() {
   const [options, setOptions] = useState([]);
   const [staffOptions, setStaffOptions] = useState([]);
-  const [showCart, setShowCart] = useState(false);
   const greeting = getGreeting();
 
   const [selectedHaircuts, setSelectedHaircuts] = useState([]);
@@ -46,6 +36,8 @@ function Booking() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+
+  const [activeStep, setActiveStep] = useState(0);
 
   const customStyles = {
     control: (base) => ({
@@ -103,10 +95,6 @@ function Booking() {
       }));
   };
 
-  const toggleView = () => {
-    setShowCart(!showCart);
-  };
-
   const handleStaffChange = (selectedOption) => {
     setSelectedStaff({
       id: selectedOption.value,
@@ -130,6 +118,14 @@ function Booking() {
     setSelectedTreatments(selectedOptions);
   };
 
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, 4));
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
+  };
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -141,8 +137,6 @@ function Booking() {
 
   const totalPages = Math.ceil(options.length / itemsPerPage);
 
- 
-
   return (
     <>
       <div className="greeting-container">
@@ -152,12 +146,13 @@ function Booking() {
         </h1>
         <p className="mt-3 sm:text-sm md:text-lg lg:text-2xl xl:text-3xl 2xl:text-4xl text-gray-500 animate-fadeIn delay-150 duration-700" style={{ fontSize: '0.65rem' }}>Ready to make your day better? <a href="#appointment" className="text-[#fbd137] font-semibold underline">Book an appointment with us!</a></p>
       </div>
+      <ProgressMobileStepper activeStep={activeStep} handleNext={handleNext} handleBack={handleBack} />
       <div className="main-container">
         <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
-          {!showCart ? (
+          {activeStep === 0 && (
             <Grid item xs={12} md={3} p={2}>
               <div className="select">
-                <h1 className="font-bold text-xl">BOOK APPOINTMENT</h1>
+                <h1 className="font-bold text-xl">Services</h1>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <h2 className="haircut">Hair Cut</h2>
@@ -210,114 +205,65 @@ function Booking() {
                     </div>
                   </Grid>
                   <Grid item xs={12}>
-                    <div className="content-container3">
-                      <h2 className="Treatment">Treatment</h2>
-                      <div className="multiselect-container3">
-                        <Select
-                          isMulti
-                          name="Treatment"
-                          options={paginate(filterServicesByCategory('Treatment'))}
-                          className="basic-multi-select3"
-                          classNamePrefix="select"
-                          placeholder="Select Treatment"
-                          styles={customStyles}
-                          onChange={handleTreatmentChange}
-                          value={selectedTreatments}
-                        />
-                      </div>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <h2 className="Staff">Staff</h2>
-                    <div className="multiselect-container4">
+                    <h2 className="treatment">Treatment</h2>
+                    <div className="multiselect-container3">
                       <Select
-                        name="Staff"
-                        options={staffOptions}
-                        className="basic-single"
+                        isMulti
+                        name="Treatment"
+                        options={paginate(filterServicesByCategory('Treatment'))}
+                        className="basic-multi-select3"
                         classNamePrefix="select"
-                        placeholder="Select staff"
-                        theme={(theme) => ({
-                          ...theme,
-                          borderRadius: 0,
-                          colors: {
-                            ...theme.colors,
-                            primary25: '#fbd137',
-                            primary: 'black',
-                          },
-                        })}
+                        placeholder="Select Treatment"
                         styles={customStyles}
-                        onChange={handleStaffChange}
-                        value={selectedStaff.id ? { value: selectedStaff.id, label: selectedStaff.first_name } : null} // Adjust for single select
+                        onChange={handleTreatmentChange}
+                        value={selectedTreatments}
                       />
                     </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div className="button-container" style={{
-                      width: '50%',
-                      display: 'flex',
-                      justifyContent: 'center', // Center horizontally
-                      alignItems: 'left', // Center vertically
-                      marginTop: '30px' // Adjust spacing as needed
-                    }}>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div><BookAppointment 
-                      selectedDate={selectedDate}
-                      setSelectedDate={setSelectedDate}
-                      selectedTimeSlot={selectedTimeSlot}
-                      setSelectedTimeSlot={setSelectedTimeSlot}
-                    /></div>
                   </Grid>
                   <Grid item xs={12}>
                     <div style={{
+                      width: '50%',
                       display: 'flex',
-                      flexDirection: 'row',
                       justifyContent: 'center',
-                      alignItems: 'center',
-                      height: '50%',
-                      marginTop: '20px'
+                      alignItems: 'left',
+                      marginTop: '30px'
                     }}>
-                      <Button onClick={toggleView} style={{
+                      <Button onClick={handleNext} style={{
                         marginTop: '8px',
                         padding: "5px 16px",
                         width: '200px',
-                        border: '2px solid #6c757d', // Example: grey border
-                        backgroundColor: '#e9ecef' // Example: lighter grey background// Example: light gray background
-                      }}>Continue to Cart</Button>
-                      <div style={{ margin: '10px' }}>OR</div>
-                      <CustomerDetails
-                        buttonText={'Proceed to Book Now'}
-                        selectedStaff={selectedStaff}
-                        selectedHaircuts={selectedHaircuts}
-                        selectedFacialTreatments={selectedFacialTreatments}
-                        selectedColors={selectedColors}
-                        selectedTreatments={selectedTreatments}
-                        selectedDate={selectedDate}
-                        selectedTimeSlot={selectedTimeSlot}
-                      />
+                        border: '2px solid #6c757d',
+                        backgroundColor: '#fbd137',
+                       
+                      }}>Continue</Button>
                     </div>
                   </Grid>
                 </Grid>
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious href="#" onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationNext href="#" onClick={() => handlePageChange(currentPage < totalPages ? currentPage + 1 : totalPages)} />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
               </div>
             </Grid>
-          ) : (
-            <Grid item xs={12} md={12} p={2}>
+          )}
+          {activeStep === 1 && (
+            <Grid item xs={12} md={3} p={2}>
+              <BookAppointment 
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                selectedTimeSlot={selectedTimeSlot}
+                setSelectedTimeSlot={setSelectedTimeSlot}
+                handleNext={handleNext}
+              />
+              <Button onClick={handleBack} style={{ marginTop: '3px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
+            </Grid>
+          )}
+          {activeStep === 2 && (
+            <Grid item xs={12} md={3} p={2}>
+              <Staff selectedStaff={selectedStaff} setSelectedStaff={setSelectedStaff}  handleNext={handleNext}/>
+              <Button onClick={handleBack} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
+              <Button onClick={handleNext} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Next</Button>
+            </Grid>
+          )}
+          {activeStep === 3 && (
+            <Grid item xs={12} md={3} p={2}>
               <Cart
-                toggleView={toggleView}
                 selectedStaff={selectedStaff}
                 selectedHaircuts={selectedHaircuts}
                 selectedFacialTreatments={selectedFacialTreatments}
@@ -326,6 +272,8 @@ function Booking() {
                 selectedDate={selectedDate}
                 selectedTimeSlot={selectedTimeSlot}
               />
+              <Button onClick={handleBack} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
+              <Button onClick={() => alert('Booking Confirmed')} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Confirm</Button>
             </Grid>
           )}
         </Grid>

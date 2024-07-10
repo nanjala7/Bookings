@@ -172,14 +172,15 @@
 .content-container3 {
   display: flex;
   flex-direction: column;
-  margin-top: -90px;
+  margin-top: -160px;
 }
-.Treatment {
+.treatment {
   text-align: right;
   position: relative;
   left: -332px;
   margin-bottom: 10px;
   font-size: 18px;
+  margin-top: -90px;
   /* No changes needed here unless you want to adjust the appearance of the heading */
 }
 
@@ -194,17 +195,7 @@
 .basic-multi-select3 {
   width: 41.5%;
 }
- .Staff{
-
-  margin-bottom: 10px;
- }
-  .multiselect-container4 {
-    width: 40%; /* Full width for single select */
-    display: flex;
-    flex-direction: column;
-    align-items: right;
-
-  }
+ 
 
   .basic-multi-select,
   .basic-multi-select1,
