@@ -7,6 +7,8 @@ import Staff from './staff';  // Import the Staff component
 import { Button } from "@/components/ui/button";
 import Grid from '@mui/material/Grid';
 import ProgressMobileStepper from './progressMobileStepper';
+import { Height } from '@mui/icons-material';
+
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -42,15 +44,29 @@ function Booking() {
   const customStyles = {
     control: (base) => ({
       ...base,
-      borderRadius: '10px',
+      
+      borderColor: '#fbd137',
+      borderRadius: '12px',
+      '&:hover': {
+        borderColor: '#fbd137',
+       
+      },
     }),
     menu: (base) => ({
       ...base,
       borderRadius: '10px',
     }),
-    option: (base) => ({
+    option: (base, state) => ({
       ...base,
       borderRadius: '10px',
+      backgroundColor: state.isFocused ? '#fbd137' : '#fff',
+    color: '#333',
+   
+   
+    '&:hover': {
+      backgroundColor: '#fbd137',
+      
+    },
     }),
   };
 
@@ -148,9 +164,9 @@ function Booking() {
       </div>
       <ProgressMobileStepper activeStep={activeStep} handleNext={handleNext} handleBack={handleBack} />
       <div className="main-container">
-        <Grid container direction={{ xs: 'column', md: 'row' }} justifyContent="center" alignItems="center">
+        <Grid container direction="column" justifyContent="center" alignItems="center">
           {activeStep === 0 && (
-            <Grid item xs={12} md={3} p={2}>
+            <Grid item xs={12} p={2}>
               <div className="select">
                 <h1 className="font-bold text-xl">Services</h1>
                 <Grid container spacing={2}>
@@ -222,14 +238,15 @@ function Booking() {
                   </Grid>
                   <Grid item xs={12}>
                     <div style={{
-                      width: '50%',
+                      width: '100%',
                       display: 'flex',
                       justifyContent: 'center',
-                      alignItems: 'left',
+                      alignItems: 'center',
                       marginTop: '30px'
                     }}>
                       <Button onClick={handleNext} style={{
-                        marginTop: '8px',
+                        marginTop: '1cm',
+                        
                         padding: "5px 16px",
                         width: '200px',
                         border: '2px solid #6c757d',
@@ -238,31 +255,21 @@ function Booking() {
                       }}>Continue</Button>
                     </div>
                   </Grid>
+
                 </Grid>
               </div>
             </Grid>
           )}
+          
           {activeStep === 1 && (
-            <Grid item xs={12} md={3} p={2}>
-              <BookAppointment 
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                selectedTimeSlot={selectedTimeSlot}
-                setSelectedTimeSlot={setSelectedTimeSlot}
-                handleNext={handleNext}
-              />
-              <Button onClick={handleBack} style={{ marginTop: '3px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
+            <Grid item xs={12} p={2}>
+              <Staff selectedStaff={selectedStaff} setSelectedStaff={setSelectedStaff}  handleNext={handleNext} handleBack={handleBack}/>
+              
+              
             </Grid>
           )}
-          {activeStep === 2 && (
-            <Grid item xs={12} md={3} p={2}>
-              <Staff selectedStaff={selectedStaff} setSelectedStaff={setSelectedStaff}  handleNext={handleNext}/>
-              <Button onClick={handleBack} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
-              <Button onClick={handleNext} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Next</Button>
-            </Grid>
-          )}
-          {activeStep === 3 && (
-            <Grid item xs={12} md={3} p={2}>
+          {activeStep === 2&& (
+            <Grid item xs={12} p={2}>
               <Cart
                 selectedStaff={selectedStaff}
                 selectedHaircuts={selectedHaircuts}
@@ -271,9 +278,10 @@ function Booking() {
                 selectedTreatments={selectedTreatments}
                 selectedDate={selectedDate}
                 selectedTimeSlot={selectedTimeSlot}
+                handleBack={handleBack}
               />
-              <Button onClick={handleBack} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Back</Button>
-              <Button onClick={() => alert('Booking Confirmed')} style={{ marginTop: '8px', padding: "5px 16px", width: '100px', border: '2px solid #6c757d', backgroundColor: '#e9ecef' }}>Confirm</Button>
+              
+             
             </Grid>
           )}
         </Grid>

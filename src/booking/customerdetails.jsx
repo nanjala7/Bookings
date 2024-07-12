@@ -1,8 +1,5 @@
-import React, { useState, useEffect,  useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomerForm from './customerform';
-import emailjs from '@emailjs/browser';
-
-
 import {
   Sheet,
   SheetContent,
@@ -14,8 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
 
 function CustomerDetails({
   buttonText,
@@ -31,8 +26,7 @@ function CustomerDetails({
   const [isCustomerInDatabase, setIsCustomerInDatabase] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [customerId, setCustomerId] = useState(null);
-  const { toast } = useToast();
-  
+
   useEffect(() => {
     console.log('buttonText:', buttonText);
     console.log('selectedStaff:', selectedStaff);
@@ -44,6 +38,7 @@ function CustomerDetails({
     console.log('selectedTimeSlot:', selectedTimeSlot);
   }, [buttonText, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, selectedDate, selectedTimeSlot]);
 
+  // Debounce function to limit API calls
   const debounce = (func, wait) => {
     let timeout;
     return function executedFunction(...args) {
@@ -76,17 +71,18 @@ function CustomerDetails({
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      console.log(data); // Debugging: Log the API response
 
+      // Adjusted logic: Check if the response contains customer details
       if (data.results && data.results.length > 0) {
-        const customerId = data.results[0].id;
-        console.log('Customer ID:', customerId);
-        setCustomerId(customerId);
+        const customerId = data.results[0].id; // Assuming the response contains an array of customers
+        console.log('Customer ID:', customerId); // Log the customer ID to the console
+        setCustomerId(customerId); // Store the customer ID
         setIsCustomerInDatabase(true);
         setErrorMessage('');
       } else {
         setIsCustomerInDatabase(false);
-        setErrorMessage('Customer not found. Please fill out the form below.');
+        setErrorMessage('Customer not found. Please Click Register to add customer details.');
       }
     } catch (error) {
       console.error('Error checking customer:', error);
@@ -101,24 +97,27 @@ function CustomerDetails({
       return;
     }
 
+    // Combine date and time into a JavaScript Date object
     let dateTime = new Date(selectedDate.setHours(
       parseInt(selectedTimeSlot.split(':')[0], 10) + (selectedTimeSlot.includes('PM') && !selectedTimeSlot.includes('12') ? 12 : 0),
       parseInt(selectedTimeSlot.split(':')[1].split(' ')[0], 10)
     ));
 
-    let dateTimeISO = dateTime.toISOString();
+    // Convert to ISO string and ensure it includes milliseconds and timezone information
+    // Assuming the server expects the time in UTC, convert the dateTime to UTC
+    let dateTimeISO = dateTime.toISOString(); // This already includes
 
     const appointmentData = {
       customer_id: customerId,
-      user_id: selectedStaff.id,
+      user_id: selectedStaff.id, // Use the selected staff ID
       service_ids: [
         ...selectedHaircuts.map(service => service.value),
         ...selectedFacialTreatments.map(service => service.value),
         ...selectedColors.map(service => service.value),
         ...selectedTreatments.map(service => service.value),
       ],
-      location_id: 1,
-      date_time: dateTimeISO,
+      location_id: 1, // Replace with the actual location ID
+      date_time: dateTimeISO, // Combine date and time
       status: 'Scheduled',
     };
 
@@ -137,118 +136,89 @@ function CustomerDetails({
 
       const data = await response.json();
       console.log('Appointment created:', data);
-
-      // Send confirmation email
-      await sendConfirmationEmail(contact, data);
-
-      toast({
-        title: "Booking Successful",
-        description: "Your appointment has been booked successfully. A confirmation email has been sent.",
-        status: "success",
-      });
+      // Handle success (e.g., show a success message, redirect, etc.)
     } catch (error) {
       console.error('Error creating appointment:', error);
-      setErrorMessage('Error creating appointment. Please try again later.');
+      // Handle error (e.g., show an error message)
     }
   };
 
-  const sendConfirmationEmail = async (contact, appointmentData) => {
-    try {
-      const emailData = {
-        to: contact,
-        subject: 'Appointment Confirmation',
-        body: `Your appointment is confirmed for ${appointmentData.date_time}. Thank you!`
-      };
-
-      const response = await fetch('http://127.0.0.1:8000/send-email/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      console.log('Confirmation email sent');
-    } catch (error) {
-      console.error('Error sending confirmation email:', error);
-    }
-  };
-
+  // Debounced version of handleCheckCustomer
   const debouncedCheckCustomer = debounce(handleCheckCustomer, 500);
 
   useEffect(() => {
     if (contact !== '') {
       debouncedCheckCustomer();
     } else {
-      setIsCustomerInDatabase(null);
-      setErrorMessage('');
+      setIsCustomerInDatabase(null); // Reset state when input is cleared
+      setErrorMessage(''); // Clear error message when input is cleared
     }
   }, [contact]);
 
+  const handleCustomerCreated = async (newCustomerId) => {
+    setCustomerId(newCustomerId);
+    setIsCustomerInDatabase(true);
+    setErrorMessage('');
+    await handleBookNow();
+  };
+
   return (
-    <>
-      <Toaster />
-      <Sheet>
-        <SheetTrigger>
-          <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
-            {buttonText}
-          </Button>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle className="text-xl">Enter your Details</SheetTitle>
-            <SheetDescription>
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="contact"
-                    style={{
-                      fontSize: '16px',
-                      marginRight: '8px',
-                      textAlign: 'left',
-                    }}
-                  >Email or Mobile Number</Label>
-                  <Input
-                    id="contact"
-                    type="text"
-                    placeholder="Email or Mobile Number"
-                    value={contact}
-                    onChange={(e) => setContact(e.target.value)}
-                    required
-                  />
-                </div>
-                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                {isCustomerInDatabase === false && <CustomerForm />}
-                {(isCustomerInDatabase || isCustomerInDatabase === null) && (
-                  <Button
-                    type="submit"
-                    className="w-full bg-yellow-400 text-black hover:bg-yellow-400"
-                   
-                    onClick={() => {
-                      toast({
-                        title: "Booking sucessful!.",
-                        description: "booking details sent to email",
-                      })
-                      handleBookNow();
-                      setTimeout(() => {
-                        window.location.reload(); // Refresh the window after 2 seconds
-                      }, 1500);
-                    
-                    }}
-                 
-           >
-                    Book Now
-                  </Button>
-                )}
+    <Sheet>
+      <SheetTrigger>
+        <Button className="bg-yellow-400 text-black hover:bg-yellow-400">
+          {buttonText}
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle className="text-xl">Enter Your Details</SheetTitle>
+          <SheetDescription>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="contact"
+                  style={{
+                    fontSize: '16px',
+                    marginRight: '8px',
+                    textAlign: 'left',
+                  }}
+                >Email or Mobile Number</Label>
+                <Input
+                  id="contact"
+                  type="text"
+                  placeholder="Email or Mobile Number"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  required
+                />
               </div>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-    </>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <div className="flex justify-between items-center">
+                {!isCustomerInDatabase && (
+                  <CustomerForm
+                    onCustomerCreated={handleCustomerCreated}
+                    selectedStaff={selectedStaff}
+                    selectedHaircuts={selectedHaircuts}
+                    selectedFacialTreatments={selectedFacialTreatments}
+                    selectedColors={selectedColors}
+                    selectedTreatments={selectedTreatments}
+                    selectedDate={selectedDate}
+                    selectedTimeSlot={selectedTimeSlot}
+                  />
+                )}
+                <Button
+                  type="submit"
+                  className="w-full bg-yellow-400 text-black hover:bg-yellow-400"
+                  onClick={handleBookNow}
+                  style={{ maxWidth: '200px', marginLeft: !isCustomerInDatabase ? '20px' : '0' }} // Adjust the width as needed
+                >
+                  Book Now
+                </Button>
+              </div>
+            </div>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   );
 }
 

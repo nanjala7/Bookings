@@ -8,7 +8,7 @@ import CustomerDetails from './customerdetails';
 import AppointmentContext from "@/context/AppointmentContext";
 
 // Define the Cart component
-function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments }) {
+function Cart({ toggleView, handleBack,selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments }) {
   const total = calculateTotal(selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments);
   const { date, selectedTimeSlot } = useContext(AppointmentContext);
 
@@ -18,18 +18,25 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
-      height: '100vh',
-      paddingTop: '10vh',
+      height: '18cm',
+      paddingTop:'1rem',
+      width: '62rem',
       padding: '0 5%', // Add padding for smaller screens
       '@media (max-width: 600px)': {
         paddingTop: '5vh',
       }
     },
+   
     card: {
-      width: '100%',
-      maxWidth: '500px',
-      marginTop: '2rem',
-      '@media (max-width: 600px)': {
+      padding:'1rem',
+      width: '80%',
+      height: '18cm',
+      maxWidth: '65rem',
+      marginTop: '0.1rem',
+      marginLeft: '-0.5rem',
+      borderRadius: '1rem',
+      boxShadow: '0px 15px 20px #999',
+      '@media (max-width: 480px)': {
         maxWidth: '90%',
       }
     },
@@ -38,8 +45,8 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
     },
     title: {
       fontSize: '24px',
-      marginBottom: '10px',
-      marginTop: '10px',
+      marginBottom: '12px',
+      marginTop: '12px',
       '@media (max-width: 600px)': {
         fontSize: '20px',
       }
@@ -74,8 +81,10 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
     footer: {
       display: 'flex',
       justifyContent: 'space-between',
+      marginTop: '7.5cm',
     }
   };
+
 
   return (
     <div style={styles.container}>
@@ -123,10 +132,9 @@ function Cart({ toggleView, selectedStaff, selectedHaircuts, selectedFacialTreat
           </CardDescription>
         </CardContent>
         <CardFooter style={styles.footer}>
-          <Button variant="ghost" onClick={toggleView}>
+          <Button variant="ghost" onClick={handleBack}>
             <ChevronLeft className="mr-2 h-4 w-4" /> Go back
           </Button>
-         
           <CustomerDetails
             buttonText={'Proceed to Book Now'}
             selectedStaff={selectedStaff}
