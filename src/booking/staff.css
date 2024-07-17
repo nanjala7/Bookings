@@ -1,0 +1,84 @@
+.card-container {
+    width: 19cm;
+    border-radius: 1rem;
+    box-shadow: 0px 15px 20px #999;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 1rem;
+    height: 18cm;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 50rem;
+  }
+  
+  .card-header {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: var(--mantine-font-family);
+    background-color: hsl(var(--muted)/0.5);
+    padding: 1.5rem;
+    color: black;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .card-content {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-family: var(--mantine-font-family);
+    color: #333;
+    margin: 1rem 0;
+  }
+  
+  .multiselect-container4 {
+    margin-top: -3rem;
+    width: 100%; /* Adjust for responsiveness */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .back-button {
+    padding: 0.5rem 1rem;
+    margin-top: 3cm;
+  }
+  
+  .continue-button {
+    padding: 5px 16px;
+    width: 200px;
+    border: 2px solid #6c757d;
+    background-color: #fbd137;
+    margin-top: 3cm;
+  }
+  
+  @media (max-width: 768px) {
+    .card-container {
+      width: 120%;
+      padding: 1rem;
+      margin-left: -0.7cm;
+      height: 17cm;
+      margin-top: -0.2cm;
+    }
+  
+    .multiselect-container4 {
+      width: 100%;
+      margin-top: -1cm;
+    }
+  
+    .back-button,
+    .continue-button {
+      margin-top: 2rem;
+      width: 45%;
+    }
+  
+    .button-container {
+      flex-direction: row;
+      align-items: left;
+    }
+    
+  }
+  

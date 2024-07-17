@@ -264,7 +264,7 @@ function Booking() {
           {activeStep === 1 && (
             <Grid item xs={12} p={2}>
               <Staff selectedStaff={selectedStaff} setSelectedStaff={setSelectedStaff}  handleNext={handleNext} handleBack={handleBack}/>
-              
+
               
             </Grid>
           )}

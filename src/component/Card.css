@@ -59,7 +59,10 @@
   color: #fbd137;
 }
 @media (max-width: 768px) {
-  
+  .card{
+    width: 100%;
+   
+  }
 
   .card-img {
     width: 100%;
@@ -87,11 +90,16 @@
 }
 
 @media (max-width: 480px) {
+  .card{
+    width: 100%;
+    margin-top: 0.5cm;
+  }
  
   .card-img {
     width: 100%;
     height: auto;
     border-radius: 10px 10px 0 0;
+    
   }
 
   .card-content {

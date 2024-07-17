@@ -7,41 +7,11 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import dayjs from 'dayjs';
 import BookAppointment from './bookappointment';
+import Cart from './cart';
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import './staff.css'; // Import the CSS file
 
-// Define styles outside of the component to keep the code clean
-const cardStyle = {
-  width: '80%',
-  borderRadius: '1rem',
-  boxShadow: '0px 15px 20px #999',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: 'white',
-  padding: '1rem',
-  height: '18cm',
-  marginLeft: '2.7cm',
-  maxWidth: '50rem',
-};
-
-const headerStyle = {
-  fontSize: '1.125rem',
-  lineHeight: '1.75rem',
-  fontFamily: 'var(--mantine-font-family)',
-  backgroundColor: 'hsl(var(--muted)/0.5)',
-  padding: '1.5rem',
-  color: 'black',
-  margin: '0',
-  fontWeight: 'bold',
-};
-
-const contentStyle = {
-  fontSize: '1rem',
-  lineHeight: '1.5rem',
-  fontFamily: 'var(--mantine-font-family)',
-  color: '#333',
-  margin: '1rem 0',
-};
-
-// Custom theme for the DateTimePicker
 const theme = createTheme({
   components: {
     MuiTextField: {
@@ -53,7 +23,7 @@ const theme = createTheme({
             borderRadius: '1rem',
             padding: '0.5rem',
             fontSize: '1.25rem',
-            width: '18cm',
+            width: '100%', // Adjust for responsiveness
           },
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: '#fbd137',
@@ -109,12 +79,11 @@ const theme = createTheme({
   },
 });
 
-// Custom styles for the Select component
 const customStyles = {
   control: (base) => ({
     ...base,
-    width: '18cm',
-    minHeight: '70px',
+    width: '100%', // Adjust for responsiveness
+    minHeight: '50px',
     fontSize: '1.25rem',
     borderColor: '#fbd137',
     borderRadius: '12px',
@@ -125,7 +94,7 @@ const customStyles = {
   menu: (base) => ({
     ...base,
     borderRadius: '10px',
-    width: '18cm',
+    width: '100%', // Adjust for responsiveness
   }),
   option: (base, state) => ({
     ...base,
@@ -138,7 +107,6 @@ const customStyles = {
   }),
 };
 
-// Functional component for Staff
 function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -166,16 +134,10 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={cardStyle}>
-        <h1 style={headerStyle}>Select date, time and staff</h1>
-        <p style={contentStyle}>{content}</p>
-        <BookAppointment
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          selectedTimeSlot={selectedTimeSlot}
-          setSelectedTimeSlot={setSelectedTimeSlot}
-        />
-        <div className="multiselect-container4" style={{ marginTop: '3rem', width: '65rem' }}>
+      <div className="card-container">
+        <h1 className="card-header">Select date, time and staff</h1>
+        <p className="card-content">{content}</p>
+        <div className="multiselect-container4">
           <Select
             name="Staff"
             options={staffOptions}
@@ -193,28 +155,25 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
             })}
             styles={customStyles}
             onChange={(selectedOption) => setSelectedStaff(selectedOption)}
-            value={selectedStaff.value ? { value: selectedStaff.value, label: selectedStaff.label } : null}
+            value={selectedStaff?.value ? { value: selectedStaff.value, label: selectedStaff.label } : null}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-          <Button 
-            variant="text" 
-            onClick={handleBack} 
-            style={{ padding: '0.5rem 1rem',marginTop:'8cm'}}
-          >
+        <BookAppointment
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedTimeSlot={selectedTimeSlot}
+          setSelectedTimeSlot={setSelectedTimeSlot}
+        />
+        <div className="grid w-full gap-1.5 mt-4">
+          <Label htmlFor="message">Booking notes</Label>
+          <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-48" />
+        </div>
+        <div className="button-container">
+          <Button variant="text" onClick={handleBack} className="back-button">
             <ChevronLeft className="mr-2 h-4 w-4" />
             Go back
           </Button>
-          <Button
-            onClick={handleSubmit}
-            style={{
-              padding: '5px 16px',
-              width: '200px',
-              border: '2px solid #6c757d',
-              backgroundColor: '#fbd137',
-              marginTop:'8cm',
-            }}
-          >
+          <Button onClick={handleSubmit} className="continue-button">
             Continue
           </Button>
         </div>

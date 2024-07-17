@@ -8,10 +8,13 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
+    DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Clock } from 'lucide-react';
-import { DialogClose, DialogFooter } from '@/components/ui/dialog';
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setSelectedTimeSlot }) {
     const [timeSlot, setTimeSlot] = useState([]);
@@ -59,7 +62,8 @@ function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setS
     return (
         <Dialog>
             <DialogTrigger>
-                <Button style={{ padding: '1rem', borderRadius:'10px', height:'1.3cm', fontSize: '0.875rem', fontWeight: 'bold', backgroundColor: '#fbd137', color: 'black', width: '18cm' }}>Select date & time</Button>
+                <Button style={{ padding: '1rem', borderRadius: '10px', height: '1.3cm', marginTop: '2rem', fontSize: '0.875rem', fontWeight: 'bold', backgroundColor: '#fbd137', color: 'black',  width: '100%', // Make the button take the full width on small screens
+  maxWidth: '100%',}}>Select date & time</Button>
             </DialogTrigger>
             <DialogContent className="scrollable-dialog-content max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
@@ -81,6 +85,11 @@ function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setS
                                     disabled={isPastDay}
                                     className="rounded-sm border"
                                 />
+                                {/* Text Area Section */}
+                                <div className="grid w-full gap-1.5 mt-4">
+                                    <Label htmlFor="message">Booking notes</Label>
+                                    <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-48"/>
+                                </div>
                             </div>
                             {/* Time Slots Section */}
                             <div className="flex-1 grid grid-cols-1 gap-2">

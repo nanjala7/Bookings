@@ -10,7 +10,7 @@ export default function ProgressMobileStepper({ activeStep, handleNext, handleBa
   const theme = useTheme();
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="6vh">
+    <Box display="flex" justifyContent="center" alignItems="center" height="10vh">
       <MobileStepper
         variant="progress"
         steps={3}
@@ -22,6 +22,7 @@ export default function ProgressMobileStepper({ activeStep, handleNext, handleBa
           '& .MuiMobileStepper-progress': {
             width: '80vw', // Adjust width for mobile
             backgroundColor: 'lightgrey',
+           // marginTop:'2cm',
           },
           '& .MuiLinearProgress-bar': {
             backgroundColor: '#fbd137',

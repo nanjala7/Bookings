@@ -6,132 +6,158 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator";
 import CustomerDetails from './customerdetails';
 import AppointmentContext from "@/context/AppointmentContext";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import styled from 'styled-components';
 
-// Define the Cart component
-function Cart({ toggleView, handleBack,selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments }) {
+// Define styled components
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-height: 18cm;
+  padding-top: 1rem;
+  width: 62rem;
+  padding: 0 5%;
+  @media (max-width: 600px) {
+    padding-top: 5vh;
+  }
+`;
+
+const StyledCard = styled(Card)`
+  padding: 1rem;
+  width: 80%;
+  min-height: 18cm;
+  max-width: 50rem;
+  margin-top: -0.5rem;
+  margin-left: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0px 15px 20px #999;
+  @media (max-width: 480px) {
+    max-width: 35%;
+    margin-left: -17.5cm;
+     margin-top: -1.2cm;
+     min-height: 17cm;
+  }
+`;
+
+const CardHeaderStyled = styled(CardHeader)`
+  background-color: #f5f5f5;
+
+`;
+
+const Title = styled.h2`
+  font-size: 24px;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  font-weight: bold;
+  color: #333;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+`;
+
+const ListItem = styled.li`
+  font-size: 18px;
+  margin-bottom: 15px;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+`;
+
+const Staff = styled.p`
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333;
+  font-weight: bold;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+`;
+
+const DateTime = styled.p`
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+`;
+
+const Total = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+`;
+
+const Footer = styled(CardFooter)`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4cm;
+   @media (max-width: 600px) {
+   margin-top: 1cm;
+   margin-left:  -1cm;
+  }
+`;
+
+function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments }) {
   const total = calculateTotal(selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments);
   const { date, selectedTimeSlot } = useContext(AppointmentContext);
 
-  // Define styles with media query support
-  const styles = {
-    container: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      height: '18cm',
-      paddingTop:'1rem',
-      width: '62rem',
-      padding: '0 5%', // Add padding for smaller screens
-      '@media (max-width: 600px)': {
-        paddingTop: '5vh',
-      }
-    },
-   
-    card: {
-      padding:'1rem',
-      width: '80%',
-      height: '18cm',
-      maxWidth: '65rem',
-      marginTop: '0.1rem',
-      marginLeft: '-0.5rem',
-      borderRadius: '1rem',
-      boxShadow: '0px 15px 20px #999',
-      '@media (max-width: 480px)': {
-        maxWidth: '90%',
-      }
-    },
-    cardHeader: {
-      backgroundColor: '#f5f5f5',
-    },
-    title: {
-      fontSize: '24px',
-      marginBottom: '12px',
-      marginTop: '12px',
-      '@media (max-width: 600px)': {
-        fontSize: '20px',
-      }
-    },
-    listItem: {
-      fontSize: '18px',
-      marginBottom: '5px',
-      '@media (max-width: 600px)': {
-        fontSize: '16px',
-      }
-    },
-    staff: {
-      fontSize: '24px',
-      marginBottom: '10px',
-      '@media (max-width: 600px)': {
-        fontSize: '20px',
-      }
-    },
-    dateTime: {
-      fontSize: '20px',
-      marginBottom: '10px',
-      '@media (max-width: 600px)': {
-        fontSize: '18px',
-      }
-    },
-    total: {
-      fontSize: '20px',
-      '@media (max-width: 600px)': {
-        fontSize: '18px',
-      }
-    },
-    footer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: '7.5cm',
-    }
-  };
-
-
   return (
-    <div style={styles.container}>
-      <Card style={styles.card}>
-        <CardHeader style={styles.cardHeader}>
+    <Container>
+      <StyledCard>
+        <CardHeaderStyled>
           <CardTitle>APPOINTMENT SUMMARY</CardTitle>
-        </CardHeader>
+        </CardHeaderStyled>
         <CardContent>
           <CardDescription>
             <div>
-              <h2 style={styles.title}>Selected Services</h2>
+              <Title>Selected Services:</Title>
               <ul>
                 {selectedHaircuts.map((service, index) => (
-                  <li key={index} style={styles.listItem}>
+                  <ListItem key={index}>
                     <strong>{service.name}</strong> - {service.duration} mins - Ksh {service.price}
-                  </li>
+                  </ListItem>
                 ))}
                 {selectedFacialTreatments.map((service, index) => (
-                  <li key={index} style={styles.listItem}>
+                  <ListItem key={index}>
                     <strong>{service.name}</strong> - {service.duration} mins - Ksh {service.price}
-                  </li>
+                  </ListItem>
                 ))}
                 {selectedColors.map((service, index) => (
-                  <li key={index} style={styles.listItem}>
+                  <ListItem key={index}>
                     <strong>{service.name}</strong> - {service.duration} mins - Ksh {service.price}
-                  </li>
+                  </ListItem>
                 ))}
                 {selectedTreatments.map((service, index) => (
-                  <li key={index} style={styles.listItem}>
+                  <ListItem key={index}>
                     <strong>{service.name}</strong> - {service.duration} mins - Ksh {service.price}
-                  </li>
+                  </ListItem>
                 ))}
               </ul>
             </div>
             <Separator className="my-4" />
             <div>
-              <p style={styles.staff}>Selected Staff: {selectedStaff.first_name}</p>
-              <p style={styles.dateTime}>Date: {date.toLocaleDateString()}</p>
-              <p style={styles.dateTime}>Time Slot: {selectedTimeSlot}</p>
+              <Staff>Selected Staff: {selectedStaff.first_name}</Staff>
+              <DateTime>Date: {date.toLocaleDateString()}</DateTime>
+              <DateTime>Time Slot: {selectedTimeSlot}</DateTime>
             </div>
             <Separator className="my-4" />
             <div>
-              <p style={styles.total}>Total: Ksh {new Intl.NumberFormat('en-KE', { style: 'decimal', minimumFractionDigits: 0 }).format(total)}</p>
+              <Total>Total: Ksh {new Intl.NumberFormat('en-KE', { style: 'decimal', minimumFractionDigits: 0 }).format(total)}</Total>
+            </div>
+            <div className="grid w-full gap-1.5 mt-4">
+              <Label htmlFor="message">Booking notes</Label>
+              <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-25"/>
             </div>
           </CardDescription>
         </CardContent>
-        <CardFooter style={styles.footer}>
+        <Footer>
           <Button variant="ghost" onClick={handleBack}>
             <ChevronLeft className="mr-2 h-4 w-4" /> Go back
           </Button>
@@ -146,15 +172,16 @@ function Cart({ toggleView, handleBack,selectedStaff, selectedHaircuts, selected
             selectedTimeSlot={selectedTimeSlot}
             total={total}
           />
-        </CardFooter>
-      </Card>
-    </div>
+        </Footer>
+      </StyledCard>
+    </Container>
   );
 }
 
 // Define PropTypes for Cart component
 Cart.propTypes = {
   toggleView: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired,
   selectedStaff: PropTypes.shape({
     first_name: PropTypes.string.isRequired,
   }).isRequired,

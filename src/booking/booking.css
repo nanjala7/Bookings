@@ -27,13 +27,19 @@
 /* Media Query for Mobile Devices */
 @media (max-width: 768px) {
   .main-container {
-    padding: 20px; /* Increase padding to reduce the effective content size */
+    padding: 30px; /* Increase padding to reduce the effective content size */
     margin-left: -13px;
     margin-right: -13px; 
-    margin-top: -1cm;       /* Move the container to the left */
+    margin-top: -1cm;
+    height: 10cm;       /* Move the container to the left */
   }
 
-  .select,
+  .select{
+    height: 17cm;
+    width: 100%; /* Full width on mobile */
+    margin-left: 0; /* Reset left margin */
+    max-width: 25rem;
+  }
   .multiselect-container,
   .multiselect-container1,
   .multiselect-container2,
@@ -208,4 +214,5 @@
     border-top: 1px solid #e5e7eb;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for better visibility */
   }
+  
 }
