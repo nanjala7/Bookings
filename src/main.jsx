@@ -12,6 +12,7 @@ const theme = {
   // Add your custom theme properties here
 };
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
     <AppointmentProvider> {/* Wrap App with AppointmentProvider */}

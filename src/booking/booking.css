@@ -9,7 +9,7 @@
   /* margin: 0.2rem 0; Unified margin */
   background-color: white;
   padding: 1rem; /* Padding for appearance */
-  height: 18cm; /* Height based on content */
+  min-height: 18cm; /* Height based on content */
   margin-left: 2.5cm;
 }
 
@@ -35,7 +35,7 @@
   }
 
   .select{
-    height: 17cm;
+    min-height: 17cm;
     width: 100%; /* Full width on mobile */
     margin-left: 0; /* Reset left margin */
     max-width: 25rem;
@@ -52,7 +52,8 @@
   .basic-single {
     width: 100%; /* Full width on mobile */
     margin-left: 0; /* Reset left margin */
-    max-width: 25rem; /* Max width for better control */
+    max-width: 25rem;
+   /* Max width for better control */
   
   }
 
@@ -62,7 +63,7 @@
   .multiselect-container3,
   .multiselect-container4 {
     margin-top: 1rem; /* Spacing between sections */
-   
+    
   }
 
   .button-container {

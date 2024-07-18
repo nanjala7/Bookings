@@ -56,7 +56,9 @@ function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setS
     };
 
     const isPastDay = (day) => {
-        return day < new Date();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to the start of the day
+        return day < today;
     };
 
     return (
@@ -86,10 +88,7 @@ function BookAppointment({ selectedDate, setSelectedDate, selectedTimeSlot, setS
                                     className="rounded-sm border"
                                 />
                                 {/* Text Area Section */}
-                                <div className="grid w-full gap-1.5 mt-4">
-                                    <Label htmlFor="message">Booking notes</Label>
-                                    <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-48"/>
-                                </div>
+                               
                             </div>
                             {/* Time Slots Section */}
                             <div className="flex-1 grid grid-cols-1 gap-2">

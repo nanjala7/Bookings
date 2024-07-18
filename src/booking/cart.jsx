@@ -19,8 +19,11 @@ const Container = styled.div`
   padding-top: 1rem;
   width: 62rem;
   padding: 0 5%;
+  box-sizing: border-box;
   @media (max-width: 600px) {
+    flex-direction: column;
     padding-top: 5vh;
+    width: 100%;
   }
 `;
 
@@ -34,16 +37,15 @@ const StyledCard = styled(Card)`
   border-radius: 1rem;
   box-shadow: 0px 15px 20px #999;
   @media (max-width: 480px) {
-    max-width: 35%;
-    margin-left: -17.5cm;
-     margin-top: -1.2cm;
-     min-height: 17cm;
+    width: 118%;
+    margin-left: -0.7cm;
+    margin-top: -1cm;
+    min-height: auto;
   }
 `;
 
 const CardHeaderStyled = styled(CardHeader)`
   background-color: #f5f5f5;
-
 `;
 
 const Title = styled.h2`
@@ -97,10 +99,15 @@ const Total = styled.p`
 const Footer = styled(CardFooter)`
   display: flex;
   justify-content: space-between;
-  margin-top: 4cm;
+  margin-top: 6.5cm;
    @media (max-width: 600px) {
-   margin-top: 1cm;
+   margin-top: 4cm;
    margin-left:  -1cm;
+   flex-direction: row;
+   align-items: center;
+  }
+     & > *:not(:last-child) {
+    margin-right: 1rem; // Add space between buttons
   }
 `;
 
@@ -151,10 +158,7 @@ function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selecte
             <div>
               <Total>Total: Ksh {new Intl.NumberFormat('en-KE', { style: 'decimal', minimumFractionDigits: 0 }).format(total)}</Total>
             </div>
-            <div className="grid w-full gap-1.5 mt-4">
-              <Label htmlFor="message">Booking notes</Label>
-              <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-25"/>
-            </div>
+            
           </CardDescription>
         </CardContent>
         <Footer>

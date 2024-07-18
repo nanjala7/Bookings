@@ -128,7 +128,7 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
   }, []);
 
   const handleSubmit = () => {
-    alert(`Selected Staff ID: ${selectedStaff?.value}, Date: ${selectedDate}, Time Slot: ${selectedTimeSlot}`);
+   // alert(`Selected Staff ID: ${selectedStaff?.value}, Date: ${selectedDate}, Time Slot: ${selectedTimeSlot}`);
     handleNext();
   };
 
@@ -164,7 +164,7 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
           selectedTimeSlot={selectedTimeSlot}
           setSelectedTimeSlot={setSelectedTimeSlot}
         />
-        <div className="grid w-full gap-1.5 mt-4">
+        <div className="grid w-full gap-3 mt-8">
           <Label htmlFor="message">Booking notes</Label>
           <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-48" />
         </div>
