@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import CustomerDetails from './customerdetails';
+import CustomerForm from './customerform';
 import AppointmentContext from "@/context/AppointmentContext";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -33,7 +34,7 @@ const StyledCard = styled(Card)`
   min-height: 18cm;
   max-width: 50rem;
   margin-top: -0.5rem;
-  margin-left: 1rem;
+  margin-left: -1rem;
   border-radius: 1rem;
   box-shadow: 0px 15px 20px #999;
   @media (max-width: 480px) {
@@ -153,6 +154,7 @@ function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selecte
               <Staff>Selected Staff: {selectedStaff.first_name}</Staff>
               <DateTime>Date: {date.toLocaleDateString()}</DateTime>
               <DateTime>Time Slot: {selectedTimeSlot}</DateTime>
+              <Staff>Booking notes: </Staff>
             </div>
             <Separator className="my-4" />
             <div>
@@ -165,7 +167,7 @@ function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selecte
           <Button variant="ghost" onClick={handleBack}>
             <ChevronLeft className="mr-2 h-4 w-4" /> Go back
           </Button>
-          <CustomerDetails
+          <CustomerForm
             buttonText={'Proceed to Book Now'}
             selectedStaff={selectedStaff}
             selectedHaircuts={selectedHaircuts}

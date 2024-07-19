@@ -44,7 +44,7 @@
   
   .back-button {
     padding: 0.5rem 1rem;
-    margin-top: 3cm;
+    margin-top: 2.5cm;
   }
   
   .continue-button {
@@ -52,7 +52,7 @@
     width: 200px;
     border: 2px solid #6c757d;
     background-color: #fbd137;
-    margin-top: 3cm;
+    margin-top: 2.5cm;
   }
   
   @media (max-width: 768px) {

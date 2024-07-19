@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// src/components/CustomerForm.js
+import React, { useEffect, useState } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -17,6 +18,27 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [locationId, setLocationId] = useState('1');
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: '962343269753-9aehum1a239f5nft3s56o3j8gjj6gt7j.apps.googleusercontent.com',
+      callback: handleGoogleSignUp,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById('googleSignUpButton'),
+      { theme: 'outline', size: 'large' }  // customization attributes
+    );
+  }, []);
+
+  const handleGoogleSignUp = async (response) => {
+    const userObject = jwt_decode(response.credential);
+    setFirstName(userObject.given_name);
+    setLastName(userObject.family_name);
+    setEmail(userObject.email);
+    setMobile(userObject.mobile || ''); // Optional field
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,44 +67,39 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       }
 
       const customer = await customerResponse.json();
-      customerId = customer.id; // Save the customer ID for potential rollback
+      customerId = customer.id;
       console.log('Customer created:', customer);
       onCustomerCreated(customer.id);
 
     } catch (error) {
       console.error('Customer creation error:', error.message);
-      // Handle customer creation error (e.g., show error message)
-      return; // Stop execution if customer creation fails
+      return;
     }
 
-    // Combine date and time into a JavaScript Date object
-let dateTime = new Date(selectedDate);
-dateTime.setHours(
-  parseInt(selectedTimeSlot.split(':')[0], 10) + (selectedTimeSlot.includes('PM') && !selectedTimeSlot.includes('12') ? 12 : 0),
-  parseInt(selectedTimeSlot.split(':')[1].split(' ')[0], 10),
-  0 // Assuming seconds are not part of the selectedTimeSlot, set to 0
-);
+    let dateTime = new Date(selectedDate);
+    dateTime.setHours(
+      parseInt(selectedTimeSlot.split(':')[0], 10) + (selectedTimeSlot.includes('PM') && !selectedTimeSlot.includes('12') ? 12 : 0),
+      parseInt(selectedTimeSlot.split(':')[1].split(' ')[0], 10),
+      0
+    );
 
-// Convert to ISO string and ensure it includes milliseconds and timezone information
-// Assuming the server expects the time in UTC, convert the dateTime to UTC
-let dateTimeISO = dateTime.toISOString(); // This already includes milliseconds and timezone information
+    let dateTimeISO = dateTime.toISOString();
 
-
-try {
-  // Appointment creation
-  const appointmentData = {
-    customer_id: customerId,
-    user_id: selectedStaff.id,
-    service_ids: [
-      ...selectedHaircuts.map(service => service.value),
-      ...selectedFacialTreatments.map(service => service.value),
-      ...selectedColors.map(service => service.value),
-      ...selectedTreatments.map(service => service.value),
-    ],
-    location_id: locationId, // Use the location ID
-    date_time: dateTimeISO, // Use the correctly formatted dateTimeISO here
-    status: 'Scheduled',
-  };
+    try {
+      // Appointment creation
+      const appointmentData = {
+        customer_id: customerId,
+        user_id: selectedStaff.id,
+        service_ids: [
+          ...selectedHaircuts.map(service => service.value),
+          ...selectedFacialTreatments.map(service => service.value),
+          ...selectedColors.map(service => service.value),
+          ...selectedTreatments.map(service => service.value),
+        ],
+        location_id: locationId,
+        date_time: dateTimeISO,
+        status: 'Scheduled',
+      };
 
       const appointmentResponse = await fetch('http://127.0.0.1:8000/appointments/', {
         method: 'POST',
@@ -100,9 +117,7 @@ try {
       console.log('Appointment created:', appointment);
 
       alert('Appointment successfully created');
-
       window.location.reload();
-      // Handle success (e.g., show success message, clear form, etc.)
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -110,8 +125,6 @@ try {
 
     } catch (error) {
       console.error('Appointment creation error:', error.message);
-      // Handle appointment creation error (e.g., show error message)
-      // Consider rollback or cleanup actions here if necessary
     }
   };
 
@@ -119,7 +132,7 @@ try {
     <Sheet>
       <SheetTrigger>
         <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
-          Register
+          Proceed to book
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -175,6 +188,7 @@ try {
                 <Button type="submit" className="w-full">
                   Book Now
                 </Button>
+                <div id="googleSignUpButton" className="mt-4"></div>
               </div>
             </form>
           </SheetDescription>
