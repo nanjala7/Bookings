@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import dayjs from 'dayjs';
 import BookAppointment from './bookappointment';
-import Cart from './cart';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import './staff.css'; // Import the CSS file
@@ -107,7 +106,7 @@ const customStyles = {
   }),
 };
 
-function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
+function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes, handleNext, handleBack }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [content, setContent] = useState('');
@@ -128,7 +127,6 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
   }, []);
 
   const handleSubmit = () => {
-   // alert(`Selected Staff ID: ${selectedStaff?.value}, Date: ${selectedDate}, Time Slot: ${selectedTimeSlot}`);
     handleNext();
   };
 
@@ -166,7 +164,13 @@ function Staff({ selectedStaff, setSelectedStaff, handleNext, handleBack }) {
         />
         <div className="grid w-full gap-3 mt-8">
           <Label htmlFor="message">Booking notes</Label>
-          <Textarea placeholder="Type your message here.e.g allergies,.." id="message" className="h-48" />
+          <Textarea
+            placeholder="Type your message here, e.g. allergies,..."
+            id="message"
+            className="h-48"
+            value={bookingNotes}
+            onChange={(e) => setBookingNotes(e.target.value)}
+          />
         </div>
         <div className="button-container">
           <Button variant="text" onClick={handleBack} className="back-button">

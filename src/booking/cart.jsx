@@ -101,18 +101,18 @@ const Footer = styled(CardFooter)`
   display: flex;
   justify-content: space-between;
   margin-top: 6.5cm;
-   @media (max-width: 600px) {
-   margin-top: 4cm;
-   margin-left:  -1cm;
-   flex-direction: row;
-   align-items: center;
+  @media (max-width: 600px) {
+    margin-top: 4cm;
+    margin-left:  -1cm;
+    flex-direction: row;
+    align-items: center;
   }
-     & > *:not(:last-child) {
+  & > *:not(:last-child) {
     margin-right: 1rem; // Add space between buttons
   }
 `;
 
-function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments }) {
+function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, bookingNotes }) {
   const total = calculateTotal(selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments);
   const { date, selectedTimeSlot } = useContext(AppointmentContext);
 
@@ -151,16 +151,15 @@ function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selecte
             </div>
             <Separator className="my-4" />
             <div>
-              <Staff>Selected Staff: {selectedStaff.first_name}</Staff>
+              <Staff>Selected Staff: {selectedStaff.label}</Staff>
               <DateTime>Date: {date.toLocaleDateString()}</DateTime>
               <DateTime>Time Slot: {selectedTimeSlot}</DateTime>
-              <Staff>Booking notes: </Staff>
+              <Staff>Booking notes: {bookingNotes}</Staff>
             </div>
             <Separator className="my-4" />
             <div>
               <Total>Total: Ksh {new Intl.NumberFormat('en-KE', { style: 'decimal', minimumFractionDigits: 0 }).format(total)}</Total>
             </div>
-            
           </CardDescription>
         </CardContent>
         <Footer>
@@ -211,6 +210,7 @@ Cart.propTypes = {
     duration: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
   })).isRequired,
+  bookingNotes: PropTypes.string.isRequired,
 };
 
 // Helper function to calculate total
