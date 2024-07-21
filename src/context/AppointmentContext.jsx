@@ -1,23 +1,33 @@
-import React, { createContext, useState } from 'react';
+// src/context/AppointmentContext.js
+import React, { createContext, useState, useMemo } from 'react';
 
 const AppointmentContext = createContext();
 
 export const AppointmentProvider = ({ children }) => {
-    const [date, setDate] = useState(new Date());
-    const [selectedTimeSlot, setSelectedTimeSlot] = useState();
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
 
-    const updateAppointment = (newDate, newTimeSlot) => {
-        setDate(newDate);
-        setSelectedTimeSlot(newTimeSlot);
+    const hasTimeSlotPassed = (slot) => {
+        const [time, period] = slot.time.split(' ');
+        let [hour, minute] = time.split(':').map(Number);
+        if (period === 'PM' && hour !== 12) {
+            hour += 12;
+        } else if (period === 'AM' && hour === 12) {
+            hour = 0;
+        }
+        const now = new Date();
+        const selected = new Date(selectedDate);
+        selected.setHours(hour, minute, 0, 0);
+        return selected < now;
     };
 
-    const value = {
-        date,
-        setDate,
+    const value = useMemo(() => ({
+        selectedDate,
+        setSelectedDate,
         selectedTimeSlot,
         setSelectedTimeSlot,
-        updateAppointment, // Include the function in the context value
-    };
+        hasTimeSlotPassed
+    }), [selectedDate, selectedTimeSlot]);
 
     return (
         <AppointmentContext.Provider value={value}>

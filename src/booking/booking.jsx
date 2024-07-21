@@ -33,8 +33,10 @@ function Booking() {
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState({});
+  const [bookingNotes, setBookingNotes] = useState('');
+
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -263,7 +265,15 @@ function Booking() {
           
           {activeStep === 1 && (
             <Grid item xs={12} p={2}>
-              <Staff selectedStaff={selectedStaff} setSelectedStaff={setSelectedStaff}  handleNext={handleNext} handleBack={handleBack}/>
+              <Staff 
+              selectedStaff={selectedStaff} 
+              setSelectedStaff={setSelectedStaff}  
+              bookingNotes={bookingNotes} 
+              setBookingNotes={setBookingNotes}
+              
+
+              handleNext={handleNext} 
+              handleBack={handleBack} />
 
               
             </Grid>
@@ -277,6 +287,7 @@ function Booking() {
                 selectedColors={selectedColors}
                 selectedTreatments={selectedTreatments}
                 selectedDate={selectedDate}
+                bookingNotes={bookingNotes}
                 selectedTimeSlot={selectedTimeSlot}
                 handleBack={handleBack}
               />

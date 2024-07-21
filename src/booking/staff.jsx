@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import BookAppointment from './bookappointment';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import './staff.css'; // Import the CSS file
+import './staff.css';
 
 const theme = createTheme({
   components: {
@@ -22,7 +22,7 @@ const theme = createTheme({
             borderRadius: '1rem',
             padding: '0.5rem',
             fontSize: '1.25rem',
-            width: '100%', // Adjust for responsiveness
+            width: '100%',
           },
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: '#fbd137',
@@ -81,7 +81,7 @@ const theme = createTheme({
 const customStyles = {
   control: (base) => ({
     ...base,
-    width: '100%', // Adjust for responsiveness
+    width: '100%',
     minHeight: '50px',
     fontSize: '1.25rem',
     borderColor: '#fbd137',
@@ -93,7 +93,7 @@ const customStyles = {
   menu: (base) => ({
     ...base,
     borderRadius: '10px',
-    width: '100%', // Adjust for responsiveness
+    width: '100%',
   }),
   option: (base, state) => ({
     ...base,
@@ -127,7 +127,7 @@ function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes,
   }, []);
 
   const handleSubmit = () => {
-    handleNext();
+    handleNext(selectedDate, selectedTimeSlot, bookingNotes);
   };
 
   return (
