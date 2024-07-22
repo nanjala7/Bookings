@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext  } from 'react';
+// src/components/BookAppointment.js
+import React, { useState, useEffect, useContext } from 'react';
 import { Calendar } from "@/components/ui/calendar";
 import "./booking.css";
 import {
@@ -18,7 +19,6 @@ import AppointmentContext from '../context/AppointmentContext';
 function BookAppointment() {
     const { selectedDate, setSelectedDate, selectedTimeSlot, setSelectedTimeSlot } = useContext(AppointmentContext);
     const [timeSlot, setTimeSlot] = useState([]);
-    
 
     useEffect(() => {
         getTimeSlots();
@@ -76,7 +76,7 @@ function BookAppointment() {
     return (
         <Dialog>
             <DialogTrigger>
-                <Button style={{ padding: '1rem', borderRadius: '10px', height: '1.3cm', marginTop: '2rem', fontSize: '0.875rem', fontWeight: 'bold', backgroundColor: '#fbd137', color: 'black',  width: '100%', maxWidth: '100%' }}>Select date & time</Button>
+                <Button style={{ padding: '1rem', borderRadius: '10px', height: '1.3cm', marginTop: '2rem', fontSize: '0.875rem', fontWeight: 'bold', backgroundColor: '#fbd137', color: 'black', width: '100%', maxWidth: '100%' }}>Select date & time</Button>
             </DialogTrigger>
             <DialogContent className="scrollable-dialog-content max-h-[80vh] overflow-y-auto">
                 <DialogHeader>

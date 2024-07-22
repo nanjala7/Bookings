@@ -1,4 +1,5 @@
-import React from 'react';
+// src/components/Cart.js
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,8 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator";
 import CustomerForm from './customerform';
 import styled from 'styled-components';
+import AppointmentContext from '../context/AppointmentContext';
 
-// Define styled components
 const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -83,6 +84,7 @@ const DateTime = styled.p`
         font-size: 15px;
     }
 `;
+
 const BookingNotes = styled.p`
     font-size: 18px;
     font-family: 'Courier New', Courier, monospace;
@@ -113,11 +115,12 @@ const Footer = styled(CardFooter)`
         align-items: center;
     }
     & > *:not(:last-child) {
-        margin-right: 1rem; // Add space between buttons
+        margin-right: 1rem;
     }
 `;
 
-function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, bookingNotes, selectedDate, selectedTimeSlot }) {
+function Cart({ handleBack, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, bookingNotes }) {
+    const { selectedDate, selectedTimeSlot } = useContext(AppointmentContext);
     const total = calculateTotal(selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments);
 
     return (
@@ -187,12 +190,10 @@ function Cart({ toggleView, handleBack, selectedStaff, selectedHaircuts, selecte
     );
 }
 
-// Define PropTypes for Cart component
 Cart.propTypes = {
-    toggleView: PropTypes.func.isRequired,
     handleBack: PropTypes.func.isRequired,
     selectedStaff: PropTypes.shape({
-        first_name: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
     }).isRequired,
     selectedHaircuts: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -215,11 +216,8 @@ Cart.propTypes = {
         price: PropTypes.number.isRequired,
     })).isRequired,
     bookingNotes: PropTypes.string.isRequired,
-    selectedDate: PropTypes.instanceOf(Date),
-    selectedTimeSlot: PropTypes.string,
 };
 
-// Helper function to calculate total
 function calculateTotal(selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments) {
     let total = 0;
     [selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments].forEach(services => {

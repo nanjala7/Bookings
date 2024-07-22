@@ -1,3 +1,4 @@
+// src/components/Staff.js
 import React, { useState, useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -9,6 +10,7 @@ import dayjs from 'dayjs';
 import BookAppointment from './bookappointment';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import Cart from './cart';
 import './staff.css';
 
 const theme = createTheme({
@@ -182,6 +184,18 @@ function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes,
           </Button>
         </div>
       </div>
+      <Cart 
+        selectedStaff={selectedStaff} 
+        selectedDate={selectedDate} 
+        selectedTimeSlot={selectedTimeSlot} 
+        bookingNotes={bookingNotes} 
+        handleBack={handleBack} 
+        // Add the selected services as props
+        selectedHaircuts={[]} 
+        selectedFacialTreatments={[]} 
+        selectedColors={[]} 
+        selectedTreatments={[]} 
+      />
     </ThemeProvider>
   );
 }

@@ -141,7 +141,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
     <Sheet>
       <SheetTrigger>
         <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
-          Proceed to book
+          Proceed to book Now
         </Button>
       </SheetTrigger>
       <SheetContent>
