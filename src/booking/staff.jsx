@@ -184,18 +184,7 @@ function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes,
           </Button>
         </div>
       </div>
-      <Cart 
-        selectedStaff={selectedStaff} 
-        selectedDate={selectedDate} 
-        selectedTimeSlot={selectedTimeSlot} 
-        bookingNotes={bookingNotes} 
-        handleBack={handleBack} 
-        // Add the selected services as props
-        selectedHaircuts={[]} 
-        selectedFacialTreatments={[]} 
-        selectedColors={[]} 
-        selectedTreatments={[]} 
-      />
+      
     </ThemeProvider>
   );
 }
