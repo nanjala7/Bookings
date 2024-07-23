@@ -28,7 +28,7 @@ const Container = styled.div`
 const StyledCard = styled(Card)`
     padding: 1rem;
     width: 80%;
-    min-height: 18cm;
+    min-height: 17cm;
     max-width: 50rem;
     margin-top: -0.5rem;
     margin-left: -1rem;
@@ -36,9 +36,9 @@ const StyledCard = styled(Card)`
     box-shadow: 0px 15px 20px #999;
     @media (max-width: 480px) {
         width: 118%;
-        margin-left: -0.7cm;
+        margin-left: -0.6cm;
         margin-top: -1cm;
-        min-height: auto;
+        min-height: 17cm;
     }
 `;
 
