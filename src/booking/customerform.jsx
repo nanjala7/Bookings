@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import {
   Sheet,
   SheetContent,
@@ -10,7 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-//import jwt_decode from 'jwt-decode'; // Ensure jwt-decode is imported
+import { jwtDecode } from 'jwt-decode'; // Use named import for jwt-decode
+import './customerform.css'; // Import the CSS file
 
 function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, selectedDate, selectedTimeSlot }) {
   const [firstName, setFirstName] = useState('');
@@ -21,28 +23,11 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function initializeGoogleSignUp() {
-      /* global google */
-      google.accounts.id.initialize({
-        client_id: '962343269753-9aehum1a239f5nft3s56o3j8gjj6gt7j.apps.googleusercontent.com',
-        callback: handleGoogleSignUp,
-      });
-
-      google.accounts.id.renderButton(
-        document.getElementById('googleSignUpButton'),
-        { theme: 'outline', size: 'large' }
-      );
-    }
-    
-    initializeGoogleSignUp();
-  }, []);
-
-  const handleGoogleSignUp = async (response) => {
-    const userObject = jwt_decode(response.credential);
-    setFirstName(userObject.given_name);
-    setLastName(userObject.family_name);
-    setEmail(userObject.email);
+  const handleGoogleSignUp = (credentialResponse) => {
+    const userObject = jwtDecode(credentialResponse.credential);
+    setFirstName(userObject.given_name || '');
+    setLastName(userObject.family_name || '');
+    setEmail(userObject.email || '');
     setMobile(userObject.mobile || '');
   };
 
@@ -78,6 +63,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
       },
       body: JSON.stringify(customerData),
     });
@@ -118,6 +104,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
       },
       body: JSON.stringify(appointmentData),
     });
@@ -138,77 +125,88 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   };
 
   return (
-    <Sheet>
-      <SheetTrigger>
-        <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
-          Proceed to book Now
-        </Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Add your details</SheetTitle>
-          <SheetDescription>
-            {error && <div className="text-red-500">{error}</div>}
-            <form onSubmit={handleSubmit}>
-              <div className="grid gap-4">
-                <div className="grid grid-cols-2 gap-4">
+    <GoogleOAuthProvider clientId="962343269753-9aehum1a239f5nft3s56o3j8gjj6gt7j.apps.googleusercontent.com">
+      <Sheet>
+        <SheetTrigger>
+          <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
+            Proceed to book Now
+          </Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Add your details</SheetTitle>
+            <SheetDescription>
+              {error && <div className="text-red-500">{error}</div>}
+              <form onSubmit={handleSubmit}>
+                <div className="grid gap-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="first-name" className="text-left">First name</Label>
+                      <Input
+                        id="first-name"
+                        placeholder="Max"
+                        required
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="last-name" className="text-left">Last name</Label>
+                      <Input
+                        id="last-name"
+                        placeholder="Robinson"
+                        required
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        disabled={loading}
+                      />
+                    </div>
+                  </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="first-name">First name</Label>
+                    <Label htmlFor="email" className="text-left">Email</Label>
                     <Input
-                      id="first-name"
-                      placeholder="Max"
+                      id="email"
+                      type="email"
+                      placeholder="m@example.com"
                       required
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       disabled={loading}
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="last-name">Last name</Label>
+                    <Label htmlFor="MobileNo." className="text-left">Mobile Number </Label>
                     <Input
-                      id="last-name"
-                      placeholder="Robinson"
+                      id="MobileNo."
+                      type="tel"
+                      placeholder="+254 700000000"
                       required
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      value={mobile}
+                      onChange={(e) => setMobile(e.target.value)}
                       disabled={loading}
                     />
                   </div>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? 'Booking...' : 'Book Now'}
+                  </Button>
+                  <div className="text-center my-1">or</div>
+                  <div id="googleSignUpButton" className="mt-4">
+                    <GoogleLogin
+                      onSuccess={handleGoogleSignUp}
+                      onError={() => console.log('Login Failed')}
+                      useOneTap
+                      //ux_mode="popup" // Ensure it uses popup mode
+                      className="google-login-button" // Apply the custom CSS class
+                    />
+                  </div>
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={loading}
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="MobileNo.">Mobile Number</Label>
-                  <Input
-                    id="MobileNo."
-                    type="tel"
-                    placeholder="+254 700000000"
-                    required
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                    disabled={loading}
-                  />
-                </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Booking...' : 'Book Now'}
-                </Button>
-                <div id="googleSignUpButton" className="mt-4"></div>
-              </div>
-            </form>
-          </SheetDescription>
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
+              </form>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    </GoogleOAuthProvider>
   );
 }
 
