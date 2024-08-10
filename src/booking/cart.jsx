@@ -24,6 +24,9 @@ const Container = styled.div`
         width: 100%;
         max-height: 100%;
     }
+     @media (max-width: 768px) {
+        width: 100%;
+    }
 `;
 
 const StyledCard = styled(Card)`
@@ -37,12 +40,18 @@ const StyledCard = styled(Card)`
     box-shadow: 0px 15px 20px #999;
     overflow-y: auto;
     max-height: calc(100vh - 4rem); /* Ensure the card doesn't grow beyond the viewport height */
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
         width: 118%;
         margin-left: -0.7cm;
         margin-top: -1cm;
         max-height: 70vh; /* Adjusted height for smaller screens */
         padding-top: 1rem;
+    }
+           @media (max-width: 600px) {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 1rem;
+        max-height: 70vh; /* Adjusted height for smaller screens */
     }
 `;
 

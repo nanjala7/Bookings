@@ -40,15 +40,12 @@ function Home() {
           };
           setUserLocation(userLoc);
 
-          // Fetch real-time travel data
           const locationsWithRealTimeData = await Promise.all(locations.map(async location => {
             try {
-              const distanceMatrixResponse = await axios.get('https://maps.googleapis.com/maps/api/distancematrix/json', {
+              const distanceMatrixResponse = await axios.get('http://localhost:5000/api/distance', {
                 params: {
                   origins: `${userLoc.latitude},${userLoc.longitude}`,
-                  destinations: `${location.lat},${location.lon}`,
-                  key: 'AIzaSyCy5GovA803gr57jPSKSc-xbCehnhttMks',
-                  mode: 'driving'
+                  destinations: `${location.lat},${location.lon}`
                 }
               });
 
@@ -71,7 +68,7 @@ function Home() {
                 };
               }
             } catch (error) {
-              console.error("Error fetching data from Google Maps API:", error);
+              console.error("Error fetching data from backend:", error);
               return {
                 ...location,
                 distance: "Error",
@@ -81,7 +78,6 @@ function Home() {
             }
           }));
 
-          // Sort locations by distance
           locationsWithRealTimeData.sort((a, b) => {
             if (a.distance === "N/A" || a.distance === "Error") return 1;
             if (b.distance === "N/A" || b.distance === "Error") return -1;
@@ -119,8 +115,8 @@ function Home() {
                 link={location.link}
                 distance={location.distance}
                 travelTime={location.travelTime}
-              
                 googleMapsLink={location.googleMapsLink}
+                showMap={nearestLocation && nearestLocation.title === location.title}
               />
             </div>
           </div>
@@ -131,3 +127,5 @@ function Home() {
 }
 
 export default Home;
+
+

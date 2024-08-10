@@ -38,7 +38,6 @@ function CustomerDetails({
     console.log('selectedTimeSlot:', selectedTimeSlot);
   }, [buttonText, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, selectedDate, selectedTimeSlot]);
 
-  // Debounce function to limit API calls
   const debounce = (func, wait) => {
     let timeout;
     return function executedFunction(...args) {
@@ -50,6 +49,34 @@ function CustomerDetails({
       timeout = setTimeout(later, wait);
     };
   };
+  const handleCreateCustomer = async () => {
+    const customerData = {
+        first_name: firstName, // Ensure this is not empty
+        last_name: lastName,   // Optional but ensure it's correct
+        mobile: mobile,        // Ensure this is not empty
+        email: email,          // Ensure this is not empty and valid
+        location: locationId,  // Ensure this corresponds to an existing location
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/customers/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(customerData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create customer (Status: ${response.status})`);
+        }
+
+        const data = await response.json();
+        console.log('Customer created:', data);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
   const handleCheckCustomer = async () => {
     try {
@@ -71,13 +98,12 @@ function CustomerDetails({
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data); // Debugging: Log the API response
+      console.log(data);
 
-      // Adjusted logic: Check if the response contains customer details
       if (data.results && data.results.length > 0) {
-        const customerId = data.results[0].id; // Assuming the response contains an array of customers
-        console.log('Customer ID:', customerId); // Log the customer ID to the console
-        setCustomerId(customerId); // Store the customer ID
+        const customerId = data.results[0].id;
+        console.log('Customer ID:', customerId);
+        setCustomerId(customerId);
         setIsCustomerInDatabase(true);
         setErrorMessage('');
       } else {
@@ -97,27 +123,24 @@ function CustomerDetails({
       return;
     }
 
-    // Combine date and time into a JavaScript Date object
     let dateTime = new Date(selectedDate.setHours(
       parseInt(selectedTimeSlot.split(':')[0], 10) + (selectedTimeSlot.includes('PM') && !selectedTimeSlot.includes('12') ? 12 : 0),
       parseInt(selectedTimeSlot.split(':')[1].split(' ')[0], 10)
     ));
 
-    // Convert to ISO string and ensure it includes milliseconds and timezone information
-    // Assuming the server expects the time in UTC, convert the dateTime to UTC
-    let dateTimeISO = dateTime.toISOString(); // This already includes
+    let dateTimeISO = dateTime.toISOString();
 
     const appointmentData = {
       customer_id: customerId,
-      user_id: selectedStaff.id, // Use the selected staff ID
+      user_id: selectedStaff.id,
       service_ids: [
         ...selectedHaircuts.map(service => service.value),
         ...selectedFacialTreatments.map(service => service.value),
         ...selectedColors.map(service => service.value),
         ...selectedTreatments.map(service => service.value),
       ],
-      location_id: 1, // Replace with the actual location ID
-      date_time: dateTimeISO, // Combine date and time
+      location_id: 1,
+      date_time: dateTimeISO,
       status: 'Scheduled',
     };
 
@@ -143,15 +166,14 @@ function CustomerDetails({
     }
   };
 
-  // Debounced version of handleCheckCustomer
   const debouncedCheckCustomer = debounce(handleCheckCustomer, 500);
 
   useEffect(() => {
     if (contact !== '') {
       debouncedCheckCustomer();
     } else {
-      setIsCustomerInDatabase(null); // Reset state when input is cleared
-      setErrorMessage(''); // Clear error message when input is cleared
+      setIsCustomerInDatabase(null);
+      setErrorMessage('');
     }
   }, [contact]);
 
@@ -209,7 +231,7 @@ function CustomerDetails({
                   type="submit"
                   className="w-full bg-yellow-400 text-black hover:bg-yellow-400"
                   onClick={handleBookNow}
-                  style={{ maxWidth: '200px', marginLeft: !isCustomerInDatabase ? '20px' : '0' }} // Adjust the width as needed
+                  style={{ maxWidth: '200px', marginLeft: !isCustomerInDatabase ? '20px' : '0' }}
                 >
                   Book Now
                 </Button>
