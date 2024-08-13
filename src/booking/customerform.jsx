@@ -11,8 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { jwtDecode } from 'jwt-decode'; // Use named import for jwt-decode
-import './customerform.css'; // Import the CSS file
+import {jwtDecode} from 'jwt-decode';
+import './customerform.css';
 
 function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, selectedDate, selectedTimeSlot }) {
   const [firstName, setFirstName] = useState('');
@@ -21,7 +21,9 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   const [mobile, setMobile] = useState('');
   const [locationId, setLocationId] = useState('1');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState('');
+  const [mobileError, setMobileError] = useState('');
+  const [generalError, setGeneralError] = useState('');
 
   const handleGoogleSignUp = (credentialResponse) => {
     const userObject = jwtDecode(credentialResponse.credential);
@@ -34,7 +36,9 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setEmailError('');
+    setMobileError('');
+    setGeneralError('');
 
     try {
       const customerId = await createCustomer();
@@ -43,7 +47,6 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       window.location.reload();
       resetForm();
     } catch (error) {
-      setError(error.message);
       console.error('Error:', error.message);
     } finally {
       setLoading(false);
@@ -59,22 +62,50 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       location: locationId,
     };
 
-    const response = await fetch('http://127.0.0.1:8000/customers/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
-      },
-      body: JSON.stringify(customerData),
-    });
+    try {
+      const response = await fetch('http://127.0.0.1:8000/customers/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
+        },
+        body: JSON.stringify(customerData),
+      });
 
-    if (!response.ok) {
-      throw new Error(`Failed to create customer (Status: ${response.status})`);
+      if (!response.ok) {
+        const responseData = await response.json();
+        if (response.status === 400) {
+          if (responseData.detail && typeof responseData.detail === 'string') {
+            if (responseData.detail.includes("email")) {
+              setEmailError("A customer with this email already exists.");
+            } else if (responseData.detail.includes("mobile")) {
+              setMobileError("A customer with this mobile number already exists.");
+            } else {
+              setGeneralError("There was an issue with your submission. Please check the details and try again.");
+            }
+          } else if (responseData.email) {
+            setEmailError(responseData.email[0]);
+          } else if (responseData.mobile) {
+            setMobileError(responseData.mobile[0]);
+          } else {
+            setGeneralError("There was an issue with your submission. Please check the details and try again.");
+          }
+        } else {
+          setGeneralError(`Unexpected error occurred: ${response.statusText}`);
+        }
+        throw new Error(responseData.detail || 'Error occurred');
+      }
+
+      const customer = await response.json();
+      onCustomerCreated(customer.id);
+      return customer.id;
+    } catch (error) {
+      console.error('Error creating customer:', error);
+      if (!emailError && !mobileError && !generalError) {
+        setGeneralError("An unexpected error occurred. Please try again later.");
+      }
+      throw error;
     }
-
-    const customer = await response.json();
-    onCustomerCreated(customer.id);
-    return customer.id;
   };
 
   const createAppointment = async (customerId) => {
@@ -110,6 +141,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
     });
 
     if (!response.ok) {
+      setGeneralError("Failed to create appointment. Please try again.");
       throw new Error(`Failed to create appointment (Status: ${response.status})`);
     }
 
@@ -122,10 +154,13 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
     setLastName('');
     setEmail('');
     setMobile('');
+    setEmailError('');
+    setMobileError('');
+    setGeneralError('');
   };
 
   return (
-    <GoogleOAuthProvider clientId="962343269753-9aehum1a239f5nft3s56o3j8gjj6gt7j.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
       <Sheet>
         <SheetTrigger>
           <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
@@ -136,7 +171,6 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
           <SheetHeader>
             <SheetTitle>Add your details</SheetTitle>
             <SheetDescription>
-              {error && <div className="text-red-500">{error}</div>}
               <form onSubmit={handleSubmit}>
                 <div className="grid gap-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -174,9 +208,10 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={loading}
                     />
+                    {emailError && <p className="text-red-500">{emailError}</p>}
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="MobileNo." className="text-left">Mobile Number </Label>
+                    <Label htmlFor="MobileNo." className="text-left">Mobile Number</Label>
                     <Input
                       id="MobileNo."
                       type="tel"
@@ -186,7 +221,9 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
                       onChange={(e) => setMobile(e.target.value)}
                       disabled={loading}
                     />
+                    {mobileError && <p className="text-red-500">{mobileError}</p>}
                   </div>
+                  {generalError && <p className="text-red-500">{generalError}</p>}
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? 'Booking...' : 'Book Now'}
                   </Button>
@@ -196,8 +233,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
                       onSuccess={handleGoogleSignUp}
                       onError={() => console.log('Login Failed')}
                       useOneTap
-                      //ux_mode="popup" // Ensure it uses popup mode
-                      className="google-login-button" // Apply the custom CSS class
+                      className="google-login-button"
                     />
                   </div>
                 </div>

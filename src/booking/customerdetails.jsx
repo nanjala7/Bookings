@@ -1,3 +1,5 @@
+// CustomerDetails.jsx
+
 import React, { useState, useEffect } from 'react';
 import CustomerForm from './customerform';
 import {
@@ -49,34 +51,6 @@ function CustomerDetails({
       timeout = setTimeout(later, wait);
     };
   };
-  const handleCreateCustomer = async () => {
-    const customerData = {
-        first_name: firstName, // Ensure this is not empty
-        last_name: lastName,   // Optional but ensure it's correct
-        mobile: mobile,        // Ensure this is not empty
-        email: email,          // Ensure this is not empty and valid
-        location: locationId,  // Ensure this corresponds to an existing location
-    };
-
-    try {
-        const response = await fetch('http://127.0.0.1:8000/customers/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(customerData),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to create customer (Status: ${response.status})`);
-        }
-
-        const data = await response.json();
-        console.log('Customer created:', data);
-    } catch (error) {
-        console.error(error);
-    }
-};
 
   const handleCheckCustomer = async () => {
     try {
@@ -179,9 +153,10 @@ function CustomerDetails({
 
   const handleCustomerCreated = async (newCustomerId) => {
     setCustomerId(newCustomerId);
+    setContact(contact); // Automatically fill contact with the newly created customer's mobile or email
     setIsCustomerInDatabase(true);
     setErrorMessage('');
-    await handleBookNow();
+    await handleBookNow(); // Automatically book the appointment after customer creation
   };
 
   return (
