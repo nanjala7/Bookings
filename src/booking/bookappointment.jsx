@@ -20,7 +20,11 @@ function BookAppointment() {
     const { selectedDate, setSelectedDate, selectedTimeSlot, setSelectedTimeSlot } = useContext(AppointmentContext);
     const [timeSlot, setTimeSlot] = useState([]);
 
+    // Set initial date if not already selected
     useEffect(() => {
+        if (!selectedDate) {
+            setSelectedDate(new Date());  // Set today's date by default
+        }
         getTimeSlots();
     }, []);
 
@@ -55,7 +59,7 @@ function BookAppointment() {
 
     const isPastDay = (day) => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Reset time to the start of the day
+        today.setHours(0, 0, 0, 0);
         return day < today;
     };
 

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import CustomerForm from './customerform';
+import CustomerDetails from './customerdetails';
 import styled from 'styled-components';
 import AppointmentContext from '../context/AppointmentContext';
 
@@ -186,8 +187,8 @@ function Cart({ handleBack, selectedStaff, selectedHaircuts, selectedFacialTreat
                     <Button variant="ghost" onClick={handleBack}>
                         <ChevronLeft className="mr-2 h-4 w-4" /> Go back
                     </Button>
-                    <CustomerForm
-                        buttonText={'Proceed to Book Now'}
+                    <CustomerDetails
+                        buttonText={'continue'}
                         selectedStaff={selectedStaff}
                         selectedHaircuts={selectedHaircuts}
                         selectedFacialTreatments={selectedFacialTreatments}

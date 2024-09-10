@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+// src/components/CustomerForm.jsx
+import React, { useState, useEffect } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -11,10 +11,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {jwtDecode} from 'jwt-decode';
 import './customerform.css';
 
-function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, selectedFacialTreatments, selectedColors, selectedTreatments, selectedDate, selectedTimeSlot }) {
+function CustomerForm({
+  onCustomerCreated,
+  selectedStaff,
+  selectedHaircuts,
+  selectedFacialTreatments,
+  selectedColors,
+  selectedTreatments,
+  selectedDate,
+  selectedTimeSlot,
+  googleUserData = {},
+  accessToken,  // Receive the token
+}) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,13 +35,11 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   const [mobileError, setMobileError] = useState('');
   const [generalError, setGeneralError] = useState('');
 
-  const handleGoogleSignUp = (credentialResponse) => {
-    const userObject = jwtDecode(credentialResponse.credential);
-    setFirstName(userObject.given_name || '');
-    setLastName(userObject.family_name || '');
-    setEmail(userObject.email || '');
-    setMobile(userObject.mobile || '');
-  };
+  useEffect(() => {
+    if (googleUserData.email) setEmail(googleUserData.email);
+    if (googleUserData.firstName) setFirstName(googleUserData.firstName);
+    if (googleUserData.lastName) setLastName(googleUserData.lastName);
+  }, [googleUserData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +75,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
+          'Authorization': `Bearer ${accessToken}`,  // Use the access token
         },
         body: JSON.stringify(customerData),
       });
@@ -135,7 +143,7 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
+        'Authorization': `Bearer ${accessToken}`,  // Use the access token
       },
       body: JSON.stringify(appointmentData),
     });
@@ -160,89 +168,78 @@ function CustomerForm({ onCustomerCreated, selectedStaff, selectedHaircuts, sele
   };
 
   return (
-    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-      <Sheet>
-        <SheetTrigger>
-          <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
-            Proceed to book Now
-          </Button>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Add your details</SheetTitle>
-            <SheetDescription>
-              <form onSubmit={handleSubmit}>
-                <div className="grid gap-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="first-name" className="text-left">First name</Label>
-                      <Input
-                        id="first-name"
-                        placeholder="Max"
-                        required
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="last-name" className="text-left">Last name</Label>
-                      <Input
-                        id="last-name"
-                        placeholder="Robinson"
-                        required
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        disabled={loading}
-                      />
-                    </div>
-                  </div>
+    <Sheet>
+      <SheetTrigger>
+        <Button className="bg-yellow-400 text-black hover:bg-yellow-400 w-40">
+          Register
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Add your details</SheetTitle>
+          <SheetDescription>
+            <form onSubmit={handleSubmit}>
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="email" className="text-left">Email</Label>
+                    <Label htmlFor="first-name" className="text-left">First name</Label>
                     <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
+                      id="first-name"
+                      placeholder="Max"
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       disabled={loading}
                     />
-                    {emailError && <p className="text-red-500">{emailError}</p>}
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="MobileNo." className="text-left">Mobile Number</Label>
+                    <Label htmlFor="last-name" className="text-left">Last name</Label>
                     <Input
-                      id="MobileNo."
-                      type="tel"
-                      placeholder="+254 700000000"
+                      id="last-name"
+                      placeholder="Robinson"
                       required
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       disabled={loading}
-                    />
-                    {mobileError && <p className="text-red-500">{mobileError}</p>}
-                  </div>
-                  {generalError && <p className="text-red-500">{generalError}</p>}
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? 'Booking...' : 'Book Now'}
-                  </Button>
-                  <div className="text-center my-1">or</div>
-                  <div id="googleSignUpButton" className="mt-4">
-                    <GoogleLogin
-                      onSuccess={handleGoogleSignUp}
-                      onError={() => console.log('Login Failed')}
-                      useOneTap
-                      className="google-login-button"
                     />
                   </div>
                 </div>
-              </form>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-    </GoogleOAuthProvider>
+                <div className="grid gap-2">
+                  <Label htmlFor="email" className="text-left">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={loading}
+                  />
+                  {emailError && <p className="text-red-500">{emailError}</p>}
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="MobileNo." className="text-left">Mobile Number</Label>
+                  <Input
+                    id="MobileNo."
+                    type="tel"
+                    placeholder="+254 700000000"
+                    required
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    disabled={loading}
+                  />
+                  {mobileError && <p className="text-red-500">{mobileError}</p>}
+                </div>
+                {generalError && <p className="text-red-500">{generalError}</p>}
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? 'Booking...' : 'Book Now'}
+                </Button>
+              </div>
+            </form>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   );
 }
 
