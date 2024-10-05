@@ -5,7 +5,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s ease-in-out;
-  height: 13cm;
+  height: 14cm;
   width: 10cm;
 }
 
@@ -122,3 +122,15 @@
   }
 }
 
+.placeholder-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Adjust height as needed */
+  background-color: #f0f0f0; /* Light gray background */
+}
+
+.placeholder-icon svg {
+  width: 100px;
+  height: 100px;
+}

@@ -1,37 +1,37 @@
-// src/Home.jsx
+// src/home/Home.jsx
+
 import React, { useState, useEffect } from 'react';
-import { Card } from '../component/Card';
+import { useParams } from 'react-router-dom';
+import { Card } from '../components/Card'; // Updated import to use relative path
 import axios from 'axios';
+import pLimit from 'p-limit'; // Import p-limit to control concurrent API requests
 import './Home.css';
 
-const locations = [
-  {
-    imgSrc: "https://www.miosalon.com/couponimages/2024/01/23/09dc4c71ca6b8000cbc74d886edc7028.jpg",
-    imgAlt: "Mancave NSK",
-    title: "Mancave NSK",
-    description: "Nairobi Street Kitchen, Westlands",
-    link: "/booking",
-    lat: -1.271028,
-    lon: 36.807439
-  },
-  {
-    imgSrc: "https://www.miosalon.com/couponimages/2024/01/23/d49ace252b308b85f18eb251a7119c72.jpg",
-    imgAlt: "Mancave Kitengela",
-    title: "Mancave Kitengela",
-    description: "Danka Plaza, Kitengela",
-    link: "/booking",
-    lat: -1.465306,
-    lon: 36.956218
-  }
-];
-
 function Home() {
+  const { network_slug } = useParams();
   const [userLocation, setUserLocation] = useState(null);
-  const [nearestLocation, setNearestLocation] = useState(null);
+  const [locations, setLocations] = useState([]);
   const [sortedLocations, setSortedLocations] = useState([]);
+  const [nearestLocation, setNearestLocation] = useState(null);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
+    // Fetch locations based on network slug
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/booking/${network_slug}/locations/`
+        );
+        setLocations(response.data);
+      } catch (error) {
+        console.error('Error fetching locations:', error);
+      }
+    };
+
+    fetchLocations();
+  }, [network_slug]);
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const userLoc = {
@@ -40,92 +40,156 @@ function Home() {
           };
           setUserLocation(userLoc);
 
-          const locationsWithRealTimeData = await Promise.all(locations.map(async location => {
-            try {
-              const distanceMatrixResponse = await axios.get('http://localhost:5000/api/distance', {
-                params: {
-                  origins: `${userLoc.latitude},${userLoc.longitude}`,
-                  destinations: `${location.lat},${location.lon}`
-                }
-              });
+          // Set a limit for concurrent requests to avoid API rate limiting issues
+          const limit = pLimit(5); // Limit to 5 concurrent requests
 
-              const data = distanceMatrixResponse.data;
-              if (data.rows[0].elements[0].status === "OK") {
-                const distance = data.rows[0].elements[0].distance.text;
-                const travelTime = data.rows[0].elements[0].duration.text;
-                return {
-                  ...location,
-                  distance,
-                  travelTime,
-                  googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
-                };
-              } else {
-                return {
-                  ...location,
-                  distance: "N/A",
-                  travelTime: "N/A",
-                  googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
-                };
-              }
-            } catch (error) {
-              console.error("Error fetching data from backend:", error);
-              return {
-                ...location,
-                distance: "Error",
-                travelTime: "Error",
-                googleMapsLink: `https://www.google.com/maps?q=${location.lat},${location.lon}`
-              };
+          // Calculate distance and travel time for each location
+          const locationsWithRealTimeData = await Promise.all(
+            locations.map((location) =>
+              limit(async () => {
+                if (!location.latitude || !location.longitude) {
+                  console.warn(
+                    `Location ${location.name} is missing coordinates`
+                  );
+                  return {
+                    ...location,
+                    distance: 'Coordinates not available',
+                    travelTime: 'Coordinates not available',
+                  };
+                }
+
+                try {
+                  const distanceMatrixResponse = await axios.get(
+                    `http://127.0.0.1:8000/booking/distance-time/${network_slug}/`,
+                    {
+                      params: {
+                        latitude: userLoc.latitude,
+                        longitude: userLoc.longitude,
+                        destination_latitude: location.latitude,
+                        destination_longitude: location.longitude,
+                        departure_time: 'now', // Add real-time traffic data
+                      },
+                    }
+                  );
+
+                  const data = distanceMatrixResponse.data;
+                  return {
+                    ...location,
+                    distance: data.distance || 'N/A',
+                    travelTime: data.duration || 'N/A',
+                  };
+                } catch (error) {
+                  console.error('Error fetching distance data:', error);
+                  return {
+                    ...location,
+                    distance: 'Error',
+                    travelTime: 'Error',
+                  };
+                }
+              })
+            )
+          );
+
+          // Sort locations based on distance
+          const parseDistance = (distanceStr) => {
+            if (distanceStr.includes('km')) {
+              return parseFloat(distanceStr.replace(/[^0-9.]/g, ''));
+            } else if (distanceStr.includes('m')) {
+              const meters = parseFloat(distanceStr.replace(/[^0-9.]/g, ''));
+              return meters / 1000; // Convert to kilometers
+            } else {
+              return NaN;
             }
-          }));
+          };
 
           locationsWithRealTimeData.sort((a, b) => {
-            if (a.distance === "N/A" || a.distance === "Error") return 1;
-            if (b.distance === "N/A" || b.distance === "Error") return -1;
-            return parseFloat(a.distance) - parseFloat(b.distance);
+            const distanceA = parseDistance(a.distance);
+            const distanceB = parseDistance(b.distance);
+
+            if (isNaN(distanceA)) return 1;
+            if (isNaN(distanceB)) return -1;
+            return distanceA - distanceB;
           });
 
           setSortedLocations(locationsWithRealTimeData);
           setNearestLocation(locationsWithRealTimeData[0]);
         },
         (error) => {
-          console.error("Error getting user location:", error.message);
+          console.error('Error getting user location:', error.message);
+        },
+        {
+          enableHighAccuracy: true, // Use high accuracy for better results
+          timeout: 10000, // Set a reasonable timeout
+          maximumAge: 60000, // Accept a cached position up to 1 minute old
         }
       );
     } else {
-      console.error("Geolocation not supported");
+      console.error('Geolocation not supported');
     }
-  }, []);
+  }, [locations, network_slug]);
 
   return (
     <div className="home-container">
       <h1 className="title">Choose a Location</h1>
       {sortedLocations.length > 0 && (
-        <p>Locations are arranged from nearest to farthest from your current location.</p>
+        <div>
+          <p>
+            <strong>Locations are sorted from nearest to farthest based on your current location.</strong>
+          </p>
+          <p>Click on the location name to get directions on Google Maps.</p>
+        </div>
       )}
       <div className="cards-container">
-        {sortedLocations.map((location, index) => (
-          <div className="col" key={index}>
-            <div className={`card ${nearestLocation && nearestLocation.title === location.title ? 'nearest-card' : ''}`}>
-              <Card
-                imgSrc={location.imgSrc}
-                imgAlt={location.imgAlt}
-                title={location.title}
-                description={location.description}
-                buttonText="Book Now"
-                link={location.link}
-                distance={location.distance}
-                travelTime={location.travelTime}
-                googleMapsLink={location.googleMapsLink}
-                showMap={nearestLocation && nearestLocation.title === location.title}
-              />
-            </div>
-          </div>
-        ))}
+        {sortedLocations.length > 0 ? (
+          sortedLocations.map((location, index) => {
+            const googleMapsLink =
+              location.latitude && location.longitude
+                ? `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
+                : null;
+
+            return (
+              <div className="col" key={index}>
+                <div
+                  className={`card ${
+                    nearestLocation &&
+                    nearestLocation.name === location.name
+                      ? 'nearest-card'
+                      : ''
+                  }`}
+                >
+                  <Card
+                    imgSrc={location.image || null}
+                    imgAlt={location.name}
+                    title={location.name}
+                    description={location.address}
+                    buttonText="Book Now"
+                    link={`/booking/${network_slug}/locations/${location.id}/services/`}
+                    distance={
+                      userLocation
+                        ? location.distance
+                        : 'Distance not available'
+                    }
+                    travelTime={
+                      userLocation
+                        ? location.travelTime
+                        : 'Travel time not available'
+                    }
+                    showMap={
+                      nearestLocation &&
+                      nearestLocation.name === location.name
+                    }
+                    googleMapsLink={googleMapsLink}
+                  />
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>Loading locations...</p>
+        )}
       </div>
     </div>
   );
 }
 
 export default Home;
-
-

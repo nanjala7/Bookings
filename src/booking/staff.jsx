@@ -1,4 +1,3 @@
-// src/components/Staff.js
 import React, { useState, useEffect } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -12,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Cart from './cart';
 import './staff.css';
+import { useParams } from 'react-router-dom';
 
 const theme = createTheme({
   components: {
@@ -109,13 +109,14 @@ const customStyles = {
 };
 
 function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes, handleNext, handleBack }) {
+  const { network_slug, location_id } = useParams();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [content, setContent] = useState('');
   const [staffOptions, setStaffOptions] = useState([]);
 
   const fetchStaff = async () => {
-    const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/staff');
+    const response = await fetch(`https://proartist-f6c2dfe5c27a.herokuapp.com/booking/${network_slug}/locations/${location_id}/staff/`);
     const data = await response.json();
     const formattedStaffOptions = data.map((staff) => ({
       value: staff.id,
@@ -184,7 +185,6 @@ function Staff({ selectedStaff, setSelectedStaff, bookingNotes, setBookingNotes,
           </Button>
         </div>
       </div>
-      
     </ThemeProvider>
   );
 }

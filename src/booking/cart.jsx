@@ -35,7 +35,7 @@ const StyledCard = styled(Card)`
     width: 80%;
     min-height: 18cm;
     max-width: 50rem;
-    margin-top: -0.5rem;
+    margin-top: -0.8rem;
     margin-left: -1rem;
     border-radius: 1rem;
     box-shadow: 0px 15px 20px #999;
@@ -49,9 +49,9 @@ const StyledCard = styled(Card)`
         padding-top: 1rem;
     }
            @media (max-width: 600px) {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 1rem;
+        width: 340px;
+        margin-left: -25px;
+        margin-top: -2rem;
         max-height: 70vh; /* Adjusted height for smaller screens */
     }
 `;

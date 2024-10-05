@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import BookAppointment from './bookappointment';
-import CustomerDetails from './customerdetails';
-import Cart from './cart';
-import Staff from './staff';  // Import the Staff component
-import { Button } from "@/components/ui/button";
 import Grid from '@mui/material/Grid';
 import ProgressMobileStepper from './progressMobileStepper';
-import { Height } from '@mui/icons-material';
-
+import Staff from './staff';  // Import the Staff component
+import { Button } from "@/components/ui/button";
+import { useParams } from 'react-router-dom';
 
 function getGreeting() {
   const hour = new Date().getHours();
@@ -24,8 +20,8 @@ function getGreeting() {
 }
 
 function Booking() {
+  const { network_slug, location_id } = useParams();
   const [options, setOptions] = useState([]);
-  const [staffOptions, setStaffOptions] = useState([]);
   const greeting = getGreeting();
 
   const [selectedHaircuts, setSelectedHaircuts] = useState([]);
@@ -35,9 +31,6 @@ function Booking() {
   const [selectedStaff, setSelectedStaff] = useState({});
   const [bookingNotes, setBookingNotes] = useState('');
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -46,12 +39,10 @@ function Booking() {
   const customStyles = {
     control: (base) => ({
       ...base,
-      
       borderColor: '#fbd137',
       borderRadius: '12px',
       '&:hover': {
         borderColor: '#fbd137',
-       
       },
     }),
     menu: (base) => ({
@@ -62,19 +53,16 @@ function Booking() {
       ...base,
       borderRadius: '10px',
       backgroundColor: state.isFocused ? '#fbd137' : '#fff',
-    color: '#333',
-   
-   
-    '&:hover': {
-      backgroundColor: '#fbd137',
-      
-    },
+      color: '#333',
+      '&:hover': {
+        backgroundColor: '#fbd137',
+      },
     }),
   };
 
   useEffect(() => {
     const fetchServices = async () => {
-      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/services/');
+      const response = await fetch(`http://127.0.0.1:8000/booking/${network_slug}/locations/${location_id}/services/`);
       const data = await response.json();
       const formattedOptions = data.map(service => ({
         value: service.id,
@@ -87,19 +75,8 @@ function Booking() {
       setOptions(formattedOptions);
     };
 
-    const fetchStaff = async () => {
-      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/staff');
-      const data = await response.json();
-      const formattedStaffOptions = data.map(staff => ({
-        value: staff.id,
-        label: staff.first_name,
-      }));
-      setStaffOptions(formattedStaffOptions);
-    };
-
     fetchServices();
-    fetchStaff();
-  }, []);
+  }, [network_slug, location_id]);
 
   const filterServicesByCategory = (category) => {
     return options
@@ -111,13 +88,6 @@ function Booking() {
         duration: service.duration,
         price: service.price,
       }));
-  };
-
-  const handleStaffChange = (selectedOption) => {
-    setSelectedStaff({
-      id: selectedOption.value,
-      first_name: selectedOption.label,
-    });
   };
 
   const handleHaircutChange = (selectedOptions) => {
@@ -152,8 +122,6 @@ function Booking() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return items.slice(startIndex, startIndex + itemsPerPage);
   };
-
-  const totalPages = Math.ceil(options.length / itemsPerPage);
 
   return (
     <>
@@ -246,53 +214,45 @@ function Booking() {
                       alignItems: 'center',
                       marginTop: '30px'
                     }}>
-                      <Button onClick={handleNext} style={{
+                      <div onClick={handleNext} style={{
                         marginTop: '1cm',
-                        
                         padding: "5px 16px",
                         width: '200px',
                         border: '2px solid #6c757d',
                         backgroundColor: '#fbd137',
-                       
-                      }}>Continue</Button>
+                        textAlign: 'center',
+                        cursor: 'pointer'
+                      }}>Continue</div>
                     </div>
                   </Grid>
-
                 </Grid>
               </div>
             </Grid>
           )}
-          
+
           {activeStep === 1 && (
             <Grid item xs={12} p={2}>
-              <Staff 
-              selectedStaff={selectedStaff} 
-              setSelectedStaff={setSelectedStaff}  
-              bookingNotes={bookingNotes} 
-              setBookingNotes={setBookingNotes}
-              
-
-              handleNext={handleNext} 
-              handleBack={handleBack} />
-
-              
+              <Staff
+                selectedStaff={selectedStaff}
+                setSelectedStaff={setSelectedStaff}
+                bookingNotes={bookingNotes}
+                setBookingNotes={setBookingNotes}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
             </Grid>
           )}
-          {activeStep === 2&& (
+          {activeStep === 2 && (
             <Grid item xs={12} p={2}>
+              {/* Assuming a Cart component exists for the summary of services */}
               <Cart
                 selectedStaff={selectedStaff}
                 selectedHaircuts={selectedHaircuts}
                 selectedFacialTreatments={selectedFacialTreatments}
                 selectedColors={selectedColors}
                 selectedTreatments={selectedTreatments}
-                selectedDate={selectedDate}
-                bookingNotes={bookingNotes}
-                selectedTimeSlot={selectedTimeSlot}
                 handleBack={handleBack}
               />
-              
-             
             </Grid>
           )}
         </Grid>
