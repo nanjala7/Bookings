@@ -19,7 +19,7 @@ function Home() {
     const fetchLocations = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/booking/${network_slug}/locations/`
+          `https://proartist-f6c2dfe5c27a.herokuapp.com/booking/${network_slug}/locations/`
         );
         setLocations(response.data);
       } catch (error) {
@@ -60,7 +60,7 @@ function Home() {
 
                 try {
                   const distanceMatrixResponse = await axios.get(
-                    `http://127.0.0.1:8000/booking/distance-time/${network_slug}/`,
+                    `https://proartist-f6c2dfe5c27a.herokuapp.com/booking/distance-time/${network_slug}/`,
                     {
                       params: {
                         latitude: userLoc.latitude,

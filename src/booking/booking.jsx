@@ -62,7 +62,7 @@ function Booking() {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const response = await fetch(`http://127.0.0.1:8000/booking/${network_slug}/locations/${location_id}/services/`);
+      const response = await fetch(`https://proartist-f6c2dfe5c27a.herokuapp.com/booking/${network_slug}/locations/${location_id}/services/`);
       const data = await response.json();
       const formattedOptions = data.map(service => ({
         value: service.id,

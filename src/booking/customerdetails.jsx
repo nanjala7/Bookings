@@ -89,7 +89,7 @@ function CustomerDetails({
         return;
       }
 
-      const response = await fetch(`http://127.0.0.1:8000/customers/lookup?${queryParam}`);
+      const response = await fetch(`https://proartist-f6c2dfe5c27a.herokuapp.com/customers/lookup?${queryParam}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`); // Fix error message template literal
       }
@@ -143,7 +143,7 @@ function CustomerDetails({
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/appointments/', {
+      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/appointments/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

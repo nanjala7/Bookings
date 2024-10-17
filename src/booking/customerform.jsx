@@ -71,7 +71,7 @@ function CustomerForm({
     };
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/customers/', {
+      const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/customers/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ function CustomerForm({
       status: 'Scheduled',
     };
 
-    const response = await fetch('http://127.0.0.1:8000/appointments/', {
+    const response = await fetch('https://proartist-f6c2dfe5c27a.herokuapp.com/appointments/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
